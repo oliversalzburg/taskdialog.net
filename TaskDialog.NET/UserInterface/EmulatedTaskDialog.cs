@@ -48,7 +48,7 @@ namespace TaskDialogNet.UserInterface {
     }
 
     public CommonIcon MainIcon { get; set; }
-    public System.Drawing.Icon CustomMainIcon { get; set; }
+    public Icon CustomMainIcon { get; set; }
     public string MainInstruction { get; set; }
     
     public string Content {
@@ -804,11 +804,29 @@ namespace TaskDialogNet.UserInterface {
     }
 
     /// <summary>
+    /// Updates the main instruction icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">The icon to set.</param>
+    public void UpdateMainIcon( Icon icon ) {
+      throw new NotImplementedException();
+    }
+
+    /// <summary>
     /// Updates the footer icon. Note the type (standard via enum or
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
     public void UpdateFooterIcon( CommonIcon icon ) {
+      throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Updates the footer icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">Task Dialog standard icon.</param>
+    public void UpdateFooterIcon( Icon icon ) {
       throw new NotImplementedException();
     }
     #endregion

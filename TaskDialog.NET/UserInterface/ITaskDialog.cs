@@ -286,11 +286,25 @@ namespace TaskDialogNet.UserInterface {
     void UpdateMainIcon( CommonIcon icon );
 
     /// <summary>
+    /// Updates the main instruction icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">The icon to set.</param>
+    void UpdateMainIcon( Icon icon );
+
+    /// <summary>
     /// Updates the footer icon. Note the type (standard via enum or
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
     void UpdateFooterIcon( CommonIcon icon );
+
+    /// <summary>
+    /// Updates the footer icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">Task Dialog standard icon.</param>
+    void UpdateFooterIcon( Icon icon );
     #endregion
 
   }

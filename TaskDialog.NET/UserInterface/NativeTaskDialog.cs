@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -999,6 +1000,20 @@ namespace TaskDialogNet.UserInterface {
     }
 
     /// <summary>
+    /// Updates the main instruction icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">The icon to set.</param>
+    public void UpdateMainIcon( Icon icon ) {
+      // TDM_UPDATE_ICON = WM_USER+116  // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
+      UnsafeNativeMethods.SendMessage(
+        WindowHandle,
+        (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_UPDATE_ICON,
+        (IntPtr)UnsafeNativeMethods.TASKDIALOG_ICON_ELEMENTS.TDIE_ICON_MAIN,
+        CustomMainIcon.Handle );
+    }
+
+    /// <summary>
     /// Updates the footer icon. Note the type (standard via enum or
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
@@ -1010,6 +1025,20 @@ namespace TaskDialogNet.UserInterface {
         (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_UPDATE_ICON,
         (IntPtr)UnsafeNativeMethods.TASKDIALOG_ICON_ELEMENTS.TDIE_ICON_FOOTER,
         TranslateIcon( icon ) );
+    }
+
+    /// <summary>
+    /// Updates the footer icon. Note the type (standard via enum or
+    /// custom via Icon type) must be used when upating the icon.
+    /// </summary>
+    /// <param name="icon">Task Dialog standard icon.</param>
+    public void UpdateFooterIcon( Icon icon ) {
+      // TDM_UPDATE_ICON = WM_USER+116  // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
+      UnsafeNativeMethods.SendMessage(
+        WindowHandle,
+        (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_UPDATE_ICON,
+        (IntPtr)UnsafeNativeMethods.TASKDIALOG_ICON_ELEMENTS.TDIE_ICON_FOOTER,
+        CustomFooterIcon.Handle );
     }
     #endregion
 
