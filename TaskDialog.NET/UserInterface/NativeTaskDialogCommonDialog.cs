@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   /// <summary>
   /// TaskDialog wrapped in a CommonDialog class. This is required to work well in
   /// MMC 3.0. In MMC 3.0 you must use the ShowDialog methods on the MMC classes to

@@ -6,8 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using TaskDialog.UserInterface;
-using ProgressBarStyle = TaskDialog.UserInterface.ProgressBarStyle;
+using TaskDialogNet.UserInterface;
+using ProgressBarStyle = TaskDialogNet.UserInterface.ProgressBarStyle;
 
 namespace TaskDialogDemo {
   public partial class DemoForm : Form {
@@ -16,10 +16,10 @@ namespace TaskDialogDemo {
     }
 
     private void button1_Click( object sender, EventArgs e ) {
-      TaskDialog.UserInterface.TaskDialog.MessageBox( "title", "mainInstruction", "content", "expandedInfo", "footer",
+      TaskDialog.MessageBox( "title", "mainInstruction", "content", "expandedInfo", "footer",
                                                       "verificationText", CommonButtons.Ok,
-                                                      TaskDialog.UserInterface.Icon.Information,
-                                                      TaskDialog.UserInterface.Icon.Information, ProgressBarStyle.None );
+                                                      TaskDialogNet.UserInterface.Icon.Information,
+                                                      TaskDialogNet.UserInterface.Icon.Information, ProgressBarStyle.None );
     }
   }
 }

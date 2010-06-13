@@ -1,4 +1,4 @@
-namespace TaskDialog.UserInterface
+namespace TaskDialogNet.UserInterface
 {
   partial class CommandButton
   {

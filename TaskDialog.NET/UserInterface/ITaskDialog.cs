@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
 
   public class ButtonClickedArgs : EventArgs {
     public int Id { get; private set; }

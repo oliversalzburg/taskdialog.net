@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   sealed class TransparentPictureBox : PictureBox {
     public TransparentPictureBox() {
       SetStyle( ControlStyles.SupportsTransparentBackColor, true );

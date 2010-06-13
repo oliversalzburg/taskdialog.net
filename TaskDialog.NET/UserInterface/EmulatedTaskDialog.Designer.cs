@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface
+namespace TaskDialogNet.UserInterface
 {
   partial class EmulatedTaskDialog
   {

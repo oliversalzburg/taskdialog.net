@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   public partial class EmulatedTaskDialog : Form, ITaskDialog {
 
     #region Events
@@ -142,7 +142,7 @@ namespace TaskDialog.UserInterface {
 
       CommonButtons             = CommonButtons.None;
       WindowTitle               = null;
-      MainIcon                  = global::TaskDialog.UserInterface.Icon.None;
+      MainIcon                  = global::TaskDialogNet.UserInterface.Icon.None;
       CustomMainIcon            = null;
       MainInstruction           = null;
       Content                   = null;
@@ -154,7 +154,7 @@ namespace TaskDialog.UserInterface {
       ExpandedInformation       = null;
       ExpandedControlText       = null;
       CollapsedControlText      = null;
-      FooterIcon                = global::TaskDialog.UserInterface.Icon.None;
+      FooterIcon                = global::TaskDialogNet.UserInterface.Icon.None;
       CustomFooterIcon          = null;
       Footer                    = null;
       Width                     = 460;
@@ -329,22 +329,22 @@ namespace TaskDialog.UserInterface {
 
       // Setup Main Instruction
       switch( MainIcon ) {
-        case global::TaskDialog.UserInterface.Icon.Information:
+        case global::TaskDialogNet.UserInterface.Icon.Information:
           imgMain.Image = SystemIcons.Information.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.Warning:
+        case global::TaskDialogNet.UserInterface.Icon.Warning:
           imgMain.Image = SystemIcons.Warning.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.Error:
+        case global::TaskDialogNet.UserInterface.Icon.Error:
           imgMain.Image = SystemIcons.Error.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecurityError:
+        case global::TaskDialogNet.UserInterface.Icon.SecurityError:
           imgMain.Image = SecurityIcons.Images[ "error" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -352,13 +352,13 @@ namespace TaskDialog.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecurityShield:
+        case global::TaskDialogNet.UserInterface.Icon.SecurityShield:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecurityShieldBlue:
+        case global::TaskDialogNet.UserInterface.Icon.SecurityShieldBlue:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -366,7 +366,7 @@ namespace TaskDialog.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecurityShieldGray:
+        case global::TaskDialogNet.UserInterface.Icon.SecurityShieldGray:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -374,7 +374,7 @@ namespace TaskDialog.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecuritySuccess:
+        case global::TaskDialogNet.UserInterface.Icon.SecuritySuccess:
           imgMain.Image = SecurityIcons.Images[ "success" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -382,7 +382,7 @@ namespace TaskDialog.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialog.UserInterface.Icon.SecurityWarning:
+        case global::TaskDialogNet.UserInterface.Icon.SecurityWarning:
           imgMain.Image = SecurityIcons.Images[ "warning" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -498,15 +498,15 @@ namespace TaskDialog.UserInterface {
         AdjustLabelHeight( footerText );
         pnlFooter.Height = Math.Max( 28, footerText.Height + 16 );
         switch( FooterIcon ) {
-          case global::TaskDialog.UserInterface.Icon.Information:
+          case global::TaskDialogNet.UserInterface.Icon.Information:
             imgFooter.Image = ResizeBitmap( SystemIcons.Information.ToBitmap(), 16, 16 );
             break;
             
-          case global::TaskDialog.UserInterface.Icon.Warning:
+          case global::TaskDialogNet.UserInterface.Icon.Warning:
             imgFooter.Image = ResizeBitmap( SystemIcons.Warning.ToBitmap(), 16, 16 );
             break;
 
-          case global::TaskDialog.UserInterface.Icon.Error:
+          case global::TaskDialogNet.UserInterface.Icon.Error:
             imgFooter.Image = ResizeBitmap( SystemIcons.Error.ToBitmap(), 16, 16 );
             break;
 
@@ -918,13 +918,13 @@ namespace TaskDialog.UserInterface {
 
     private void FrmTaskDialogShown( object sender, EventArgs e ) {
       switch( MainIcon ) {
-        case global::TaskDialog.UserInterface.Icon.Error:
+        case global::TaskDialogNet.UserInterface.Icon.Error:
           System.Media.SystemSounds.Hand.Play();
           break;
-        case global::TaskDialog.UserInterface.Icon.Information:
+        case global::TaskDialogNet.UserInterface.Icon.Information:
           System.Media.SystemSounds.Asterisk.Play();
           break;
-        case global::TaskDialog.UserInterface.Icon.Warning:
+        case global::TaskDialogNet.UserInterface.Icon.Warning:
           System.Media.SystemSounds.Exclamation.Play();
           break;
       }

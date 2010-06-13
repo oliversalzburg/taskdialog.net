@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   /// <summary>
   /// Class to hold native code interop declarations.
   /// </summary>

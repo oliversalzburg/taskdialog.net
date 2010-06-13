@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   public class RichTextBoxEx : RichTextBox {
     
     private const UInt32 CFE_LINK = 32;

@@ -6,7 +6,7 @@
 // <remarks/>
 //------------------------------------------------------------------
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   /// <summary>
   /// Arguments passed to the TaskDialog callback.
   /// </summary>

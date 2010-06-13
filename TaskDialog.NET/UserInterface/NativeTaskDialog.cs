@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace TaskDialog.UserInterface {
+namespace TaskDialogNet.UserInterface {
   /// <summary>
   /// The TaskDialog common button flags used to specify the builtin bottons to show in the TaskDialog.
   /// </summary>
