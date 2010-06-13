@@ -18,8 +18,8 @@ namespace TaskDialogDemo {
     private void button1_Click( object sender, EventArgs e ) {
       TaskDialog.MessageBox( "title", "mainInstruction", "content", "expandedInfo", "footer",
                                                       "verificationText", CommonButtons.Ok,
-                                                      TaskDialogNet.UserInterface.Icon.Information,
-                                                      TaskDialogNet.UserInterface.Icon.Information, ProgressBarStyle.None );
+                                                      TaskDialogNet.UserInterface.CommonIcon.Information,
+                                                      TaskDialogNet.UserInterface.CommonIcon.Information, ProgressBarStyle.None );
     }
   }
 }

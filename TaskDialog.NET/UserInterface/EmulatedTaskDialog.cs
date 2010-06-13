@@ -47,7 +47,7 @@ namespace TaskDialogNet.UserInterface {
       set { Name = value; }
     }
 
-    public Icon MainIcon { get; set; }
+    public CommonIcon MainIcon { get; set; }
     public System.Drawing.Icon CustomMainIcon { get; set; }
     public string MainInstruction { get; set; }
     
@@ -73,7 +73,7 @@ namespace TaskDialogNet.UserInterface {
 
     public string ExpandedControlText { get; set; }
     public string CollapsedControlText { get; set; }
-    public Icon FooterIcon { get; set; }
+    public CommonIcon FooterIcon { get; set; }
     public System.Drawing.Icon CustomFooterIcon { get; set; }
     public string Footer { get; set; }
     //public uint Width { get; set; }
@@ -142,7 +142,7 @@ namespace TaskDialogNet.UserInterface {
 
       CommonButtons             = CommonButtons.None;
       WindowTitle               = null;
-      MainIcon                  = global::TaskDialogNet.UserInterface.Icon.None;
+      MainIcon                  = CommonIcon.None;
       CustomMainIcon            = null;
       MainInstruction           = null;
       Content                   = null;
@@ -154,7 +154,7 @@ namespace TaskDialogNet.UserInterface {
       ExpandedInformation       = null;
       ExpandedControlText       = null;
       CollapsedControlText      = null;
-      FooterIcon                = global::TaskDialogNet.UserInterface.Icon.None;
+      FooterIcon                = CommonIcon.None;
       CustomFooterIcon          = null;
       Footer                    = null;
       Width                     = 460;
@@ -329,22 +329,22 @@ namespace TaskDialogNet.UserInterface {
 
       // Setup Main Instruction
       switch( MainIcon ) {
-        case global::TaskDialogNet.UserInterface.Icon.Information:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Information:
           imgMain.Image = SystemIcons.Information.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.Warning:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Warning:
           imgMain.Image = SystemIcons.Warning.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.Error:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Error:
           imgMain.Image = SystemIcons.Error.ToBitmap();
           contentText.Top = 0;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecurityError:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecurityError:
           imgMain.Image = SecurityIcons.Images[ "error" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -352,13 +352,13 @@ namespace TaskDialogNet.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecurityShield:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecurityShield:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecurityShieldBlue:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecurityShieldBlue:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -366,7 +366,7 @@ namespace TaskDialogNet.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecurityShieldGray:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecurityShieldGray:
           imgMain.Image = SecurityIcons.Images[ "shield" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -374,7 +374,7 @@ namespace TaskDialogNet.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecuritySuccess:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecuritySuccess:
           imgMain.Image = SecurityIcons.Images[ "success" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -382,7 +382,7 @@ namespace TaskDialogNet.UserInterface {
           _mainInstructionColor = Color.White;
           break;
 
-        case global::TaskDialogNet.UserInterface.Icon.SecurityWarning:
+        case global::TaskDialogNet.UserInterface.CommonIcon.SecurityWarning:
           imgMain.Image = SecurityIcons.Images[ "warning" ];
           mainInstructionMinSize += 8;
           contentText.Top = 4;
@@ -498,15 +498,15 @@ namespace TaskDialogNet.UserInterface {
         AdjustLabelHeight( footerText );
         pnlFooter.Height = Math.Max( 28, footerText.Height + 16 );
         switch( FooterIcon ) {
-          case global::TaskDialogNet.UserInterface.Icon.Information:
+          case global::TaskDialogNet.UserInterface.CommonIcon.Information:
             imgFooter.Image = ResizeBitmap( SystemIcons.Information.ToBitmap(), 16, 16 );
             break;
             
-          case global::TaskDialogNet.UserInterface.Icon.Warning:
+          case global::TaskDialogNet.UserInterface.CommonIcon.Warning:
             imgFooter.Image = ResizeBitmap( SystemIcons.Warning.ToBitmap(), 16, 16 );
             break;
 
-          case global::TaskDialogNet.UserInterface.Icon.Error:
+          case global::TaskDialogNet.UserInterface.CommonIcon.Error:
             imgFooter.Image = ResizeBitmap( SystemIcons.Error.ToBitmap(), 16, 16 );
             break;
 
@@ -799,7 +799,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">The icon to set.</param>
-    public void UpdateMainIcon( Icon icon ) {
+    public void UpdateMainIcon( CommonIcon icon ) {
       throw new NotImplementedException();
     }
 
@@ -808,7 +808,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
-    public void UpdateFooterIcon( Icon icon ) {
+    public void UpdateFooterIcon( CommonIcon icon ) {
       throw new NotImplementedException();
     }
     #endregion
@@ -918,13 +918,13 @@ namespace TaskDialogNet.UserInterface {
 
     private void FrmTaskDialogShown( object sender, EventArgs e ) {
       switch( MainIcon ) {
-        case global::TaskDialogNet.UserInterface.Icon.Error:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Error:
           System.Media.SystemSounds.Hand.Play();
           break;
-        case global::TaskDialogNet.UserInterface.Icon.Information:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Information:
           System.Media.SystemSounds.Asterisk.Play();
           break;
-        case global::TaskDialogNet.UserInterface.Icon.Warning:
+        case global::TaskDialogNet.UserInterface.CommonIcon.Warning:
           System.Media.SystemSounds.Exclamation.Play();
           break;
       }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace TaskDialogNet.UserInterface {
@@ -45,7 +46,7 @@ namespace TaskDialogNet.UserInterface {
     Close = 0x20
   }
 
-  public enum Icon {
+  public enum CommonIcon {
     None,
     Information,
     Warning,
@@ -115,7 +116,8 @@ namespace TaskDialogNet.UserInterface {
     // See: http://msdn.microsoft.com/en-us/library/bb787473%28VS.85%29.aspx
     CommonButtons CommonButtons { get; set; }
     string WindowTitle { get; set; }
-    Icon MainIcon { get; set; }
+    CommonIcon MainIcon { get; set; }
+    Icon CustomMainIcon { get; set; }
     string MainInstruction { get; set; }
     string Content { get; set; }
     List<TaskDialogButton> Buttons { get; }
@@ -126,7 +128,8 @@ namespace TaskDialogNet.UserInterface {
     string ExpandedInformation { get; set; }
     string ExpandedControlText { get; set; }
     string CollapsedControlText { get; set; }
-    Icon FooterIcon { get; set; }
+    CommonIcon FooterIcon { get; set; }
+    Icon CustomFooterIcon { get; set; }
     string Footer { get; set; }
     int Width { get; set; }
     #endregion
@@ -280,14 +283,14 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">The icon to set.</param>
-    void UpdateMainIcon( Icon icon );
+    void UpdateMainIcon( CommonIcon icon );
 
     /// <summary>
     /// Updates the footer icon. Note the type (standard via enum or
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
-    void UpdateFooterIcon( Icon icon );
+    void UpdateFooterIcon( CommonIcon icon );
     #endregion
 
   }

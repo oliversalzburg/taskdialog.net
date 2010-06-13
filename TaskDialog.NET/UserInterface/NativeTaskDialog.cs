@@ -440,7 +440,7 @@ namespace TaskDialogNet.UserInterface {
     /// Specifies a built in icon for the main icon in the dialog. If this is set to none
     /// and the CustomMainIcon is null then no main icon will be displayed.
     /// </summary>
-    public Icon MainIcon { get; set; }
+    public CommonIcon MainIcon { get; set; }
 
     /// <summary>
     /// Specifies a custom icon for the main icon in the dialog. If this is set to none
@@ -526,7 +526,7 @@ namespace TaskDialogNet.UserInterface {
     /// dialog box. If this is set to none and the CustomFooterIcon member is null then no
     /// footer icon will be displayed.
     /// </summary>
-    public Icon FooterIcon { get; set; }
+    public CommonIcon FooterIcon { get; set; }
 
     /// <summary>
     /// Specifies a custom icon for the icon to be displayed in the footer area of the
@@ -584,7 +584,7 @@ namespace TaskDialogNet.UserInterface {
 
       CommonButtons             = CommonButtons.None;
       WindowTitle               = null;
-      MainIcon                  = Icon.None;
+      MainIcon                  = CommonIcon.None;
       CustomMainIcon            = null;
       MainInstruction           = null;
       Content                   = null;
@@ -596,7 +596,7 @@ namespace TaskDialogNet.UserInterface {
       ExpandedInformation       = null;
       ExpandedControlText       = null;
       CollapsedControlText      = null;
-      FooterIcon                = Icon.None;
+      FooterIcon                = CommonIcon.None;
       CustomFooterIcon          = null;
       Footer                    = null;
       Width                     = 0;
@@ -989,7 +989,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">The icon to set.</param>
-    public void UpdateMainIcon( Icon icon ) {
+    public void UpdateMainIcon( CommonIcon icon ) {
       // TDM_UPDATE_ICON = WM_USER+116  // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
       UnsafeNativeMethods.SendMessage(
         WindowHandle,
@@ -1003,7 +1003,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
-    public void UpdateFooterIcon( Icon icon ) {
+    public void UpdateFooterIcon( CommonIcon icon ) {
       // TDM_UPDATE_ICON = WM_USER+116  // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
       UnsafeNativeMethods.SendMessage(
         WindowHandle,
@@ -1057,39 +1057,39 @@ namespace TaskDialogNet.UserInterface {
       return buttons.Select( button => new VistaTaskDialogButton( button.ButtonId, button.ButtonText ) ).ToList();
     }
 
-    private static IntPtr TranslateIcon( Icon icon ) {
+    private static IntPtr TranslateIcon( CommonIcon icon ) {
       switch( icon ) {
-        case Icon.None:
+        case CommonIcon.None:
           return (IntPtr)VistaTaskDialogIcon.None;
 
-        case Icon.Information:
+        case CommonIcon.Information:
           return (IntPtr)VistaTaskDialogIcon.Information;
 
-        case Icon.Warning:
+        case CommonIcon.Warning:
           return (IntPtr)VistaTaskDialogIcon.Information;
 
-        case Icon.Error:
+        case CommonIcon.Error:
           return (IntPtr)VistaTaskDialogIcon.Error;
 
-        case Icon.SecurityWarning:
+        case CommonIcon.SecurityWarning:
           return (IntPtr)VistaTaskDialogIcon.SecurityWarning;
 
-        case Icon.SecurityError:
+        case CommonIcon.SecurityError:
           return (IntPtr)VistaTaskDialogIcon.SecurityError;
 
-        case Icon.SecuritySuccess:
+        case CommonIcon.SecuritySuccess:
           return (IntPtr)VistaTaskDialogIcon.SecuritySuccess;
 
-        case Icon.SecurityShield:
+        case CommonIcon.SecurityShield:
           return (IntPtr)VistaTaskDialogIcon.SecurityShield;
 
-        case Icon.SecurityShieldBlue:
+        case CommonIcon.SecurityShieldBlue:
           return (IntPtr)VistaTaskDialogIcon.SecurityShieldBlue;
 
-        case Icon.SecurityShieldGray:
+        case CommonIcon.SecurityShieldGray:
           return (IntPtr)VistaTaskDialogIcon.SecurityShieldGray;
 
-        case Icon.Custom:
+        case CommonIcon.Custom:
           break;
       }
       throw new ArgumentOutOfRangeException( "icon" );
