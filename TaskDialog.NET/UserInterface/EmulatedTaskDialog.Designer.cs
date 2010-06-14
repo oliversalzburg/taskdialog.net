@@ -33,37 +33,37 @@ namespace TaskDialogNet.UserInterface
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager( typeof( EmulatedTaskDialog ) );
       this.pnlButtons = new System.Windows.Forms.Panel();
-      this.commonButtonPanel = new System.Windows.Forms.TableLayoutPanel();
+      this.commonButtonPanel = new System.Windows.Forms.FlowLayoutPanel();
       this.verifyCheckBox = new System.Windows.Forms.CheckBox();
       this.showHideDetails = new System.Windows.Forms.Label();
       this.imageList1 = new System.Windows.Forms.ImageList( this.components );
       this.panel2 = new System.Windows.Forms.Panel();
       this.pnlFooter = new System.Windows.Forms.Panel();
+      this.footerText = new TaskDialogNet.UserInterface.RichTextBoxEx();
       this.imgFooter = new System.Windows.Forms.PictureBox();
       this.panel5 = new System.Windows.Forms.Panel();
       this.panel3 = new System.Windows.Forms.Panel();
       this.pnlCommandButtons = new System.Windows.Forms.Panel();
       this.pnlMainInstruction = new System.Windows.Forms.Panel();
+      this.imgMain = new TaskDialogNet.UserInterface.TransparentPictureBox();
       this.pnlContent = new System.Windows.Forms.Panel();
+      this.contentText = new TaskDialogNet.UserInterface.RichTextBoxEx();
       this.pnlExpandedInfo = new System.Windows.Forms.Panel();
+      this.expandedInfoText = new TaskDialogNet.UserInterface.RichTextBoxEx();
       this.pnlRadioButtons = new System.Windows.Forms.Panel();
       this.SecurityIcons = new System.Windows.Forms.ImageList( this.components );
       this.callbackTimer = new System.Windows.Forms.Timer( this.components );
       this.focusButton = new System.Windows.Forms.Button();
       this.progressBarPanel = new System.Windows.Forms.Panel();
       this.progressBar = new System.Windows.Forms.ProgressBar();
-      this.footerText = new RichTextBoxEx();
-      this.expandedInfoText = new RichTextBoxEx();
-      this.contentText = new RichTextBoxEx();
-      this.imgMain = new TransparentPictureBox();
       this.pnlButtons.SuspendLayout();
       this.pnlFooter.SuspendLayout();
       ( (System.ComponentModel.ISupportInitialize)( this.imgFooter ) ).BeginInit();
       this.pnlMainInstruction.SuspendLayout();
+      ( (System.ComponentModel.ISupportInitialize)( this.imgMain ) ).BeginInit();
       this.pnlContent.SuspendLayout();
       this.pnlExpandedInfo.SuspendLayout();
       this.progressBarPanel.SuspendLayout();
-      ( (System.ComponentModel.ISupportInitialize)( this.imgMain ) ).BeginInit();
       this.SuspendLayout();
       // 
       // pnlButtons
@@ -84,14 +84,8 @@ namespace TaskDialogNet.UserInterface
       this.commonButtonPanel.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right ) ) );
       this.commonButtonPanel.AutoSize = true;
       this.commonButtonPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.commonButtonPanel.ColumnCount = 2;
-      this.commonButtonPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-      this.commonButtonPanel.ColumnStyles.Add( new System.Windows.Forms.ColumnStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
       this.commonButtonPanel.Location = new System.Drawing.Point( 449, 6 );
       this.commonButtonPanel.Name = "commonButtonPanel";
-      this.commonButtonPanel.RowCount = 2;
-      this.commonButtonPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
-      this.commonButtonPanel.RowStyles.Add( new System.Windows.Forms.RowStyle( System.Windows.Forms.SizeType.Percent, 50F ) );
       this.commonButtonPanel.Size = new System.Drawing.Size( 0, 0 );
       this.commonButtonPanel.TabIndex = 5;
       // 
@@ -158,6 +152,21 @@ namespace TaskDialogNet.UserInterface
       this.pnlFooter.Size = new System.Drawing.Size( 454, 36 );
       this.pnlFooter.TabIndex = 2;
       // 
+      // footerText
+      // 
+      this.footerText.BackColor = System.Drawing.Color.WhiteSmoke;
+      this.footerText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.footerText.Cursor = System.Windows.Forms.Cursors.Default;
+      this.footerText.DetectUrls = false;
+      this.footerText.Location = new System.Drawing.Point( 30, 11 );
+      this.footerText.Name = "footerText";
+      this.footerText.Size = new System.Drawing.Size( 409, 15 );
+      this.footerText.TabIndex = 4;
+      this.footerText.Text = "footerText";
+      this.footerText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.FooterLinkClicked );
+      this.footerText.Click += new System.EventHandler( this.FooterClick );
+      this.footerText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.FooterMouseDown );
+      // 
       // imgFooter
       // 
       this.imgFooter.Location = new System.Drawing.Point( 8, 10 );
@@ -202,6 +211,15 @@ namespace TaskDialogNet.UserInterface
       this.pnlMainInstruction.TabIndex = 1;
       this.pnlMainInstruction.Paint += new System.Windows.Forms.PaintEventHandler( this.PnlMainInstructionPaint );
       // 
+      // imgMain
+      // 
+      this.imgMain.BackColor = System.Drawing.Color.Transparent;
+      this.imgMain.Location = new System.Drawing.Point( 8, 8 );
+      this.imgMain.Name = "imgMain";
+      this.imgMain.Size = new System.Drawing.Size( 32, 32 );
+      this.imgMain.TabIndex = 0;
+      this.imgMain.TabStop = false;
+      // 
       // pnlContent
       // 
       this.pnlContent.Controls.Add( this.contentText );
@@ -211,6 +229,24 @@ namespace TaskDialogNet.UserInterface
       this.pnlContent.Size = new System.Drawing.Size( 454, 30 );
       this.pnlContent.TabIndex = 2;
       // 
+      // contentText
+      // 
+      this.contentText.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
+                  | System.Windows.Forms.AnchorStyles.Right ) ) );
+      this.contentText.BackColor = System.Drawing.SystemColors.Window;
+      this.contentText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.contentText.Cursor = System.Windows.Forms.Cursors.Default;
+      this.contentText.DetectUrls = false;
+      this.contentText.Location = new System.Drawing.Point( 50, 0 );
+      this.contentText.Name = "contentText";
+      this.contentText.ReadOnly = true;
+      this.contentText.Size = new System.Drawing.Size( 399, 19 );
+      this.contentText.TabIndex = 0;
+      this.contentText.Text = "contentText";
+      this.contentText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.ContentLinkClicked );
+      this.contentText.Click += new System.EventHandler( this.ContentClick );
+      this.contentText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.ContentMouseDown );
+      // 
       // pnlExpandedInfo
       // 
       this.pnlExpandedInfo.Controls.Add( this.expandedInfoText );
@@ -219,6 +255,22 @@ namespace TaskDialogNet.UserInterface
       this.pnlExpandedInfo.Name = "pnlExpandedInfo";
       this.pnlExpandedInfo.Size = new System.Drawing.Size( 454, 30 );
       this.pnlExpandedInfo.TabIndex = 10;
+      // 
+      // expandedInfoText
+      // 
+      this.expandedInfoText.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
+                  | System.Windows.Forms.AnchorStyles.Right ) ) );
+      this.expandedInfoText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.expandedInfoText.Cursor = System.Windows.Forms.Cursors.Default;
+      this.expandedInfoText.DetectUrls = false;
+      this.expandedInfoText.Location = new System.Drawing.Point( 50, 0 );
+      this.expandedInfoText.Name = "expandedInfoText";
+      this.expandedInfoText.Size = new System.Drawing.Size( 399, 19 );
+      this.expandedInfoText.TabIndex = 0;
+      this.expandedInfoText.Text = "expandedInfoText";
+      this.expandedInfoText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.ExpandedInfoLinkClicked );
+      this.expandedInfoText.Click += new System.EventHandler( this.ExpandedInfoClick );
+      this.expandedInfoText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.ExpandedInfoMouseDown );
       // 
       // pnlRadioButtons
       // 
@@ -268,64 +320,6 @@ namespace TaskDialogNet.UserInterface
       this.progressBar.Size = new System.Drawing.Size( 247, 15 );
       this.progressBar.TabIndex = 13;
       // 
-      // footerText
-      // 
-      this.footerText.BackColor = System.Drawing.Color.WhiteSmoke;
-      this.footerText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.footerText.Cursor = System.Windows.Forms.Cursors.Default;
-      this.footerText.DetectUrls = false;
-      this.footerText.Location = new System.Drawing.Point( 30, 11 );
-      this.footerText.Name = "footerText";
-      this.footerText.Size = new System.Drawing.Size( 409, 15 );
-      this.footerText.TabIndex = 4;
-      this.footerText.Text = "footerText";
-      this.footerText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.FooterLinkClicked );
-      this.footerText.Click += new System.EventHandler( this.FooterClick );
-      this.footerText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.FooterMouseDown );
-      // 
-      // expandedInfoText
-      // 
-      this.expandedInfoText.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
-                  | System.Windows.Forms.AnchorStyles.Right ) ) );
-      this.expandedInfoText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.expandedInfoText.Cursor = System.Windows.Forms.Cursors.Default;
-      this.expandedInfoText.DetectUrls = false;
-      this.expandedInfoText.Location = new System.Drawing.Point( 50, 0 );
-      this.expandedInfoText.Name = "expandedInfoText";
-      this.expandedInfoText.Size = new System.Drawing.Size( 399, 19 );
-      this.expandedInfoText.TabIndex = 0;
-      this.expandedInfoText.Text = "expandedInfoText";
-      this.expandedInfoText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.ExpandedInfoLinkClicked );
-      this.expandedInfoText.Click += new System.EventHandler( this.ExpandedInfoClick );
-      this.expandedInfoText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.ExpandedInfoMouseDown );
-      // 
-      // contentText
-      // 
-      this.contentText.Anchor = ( (System.Windows.Forms.AnchorStyles)( ( ( System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left )
-                  | System.Windows.Forms.AnchorStyles.Right ) ) );
-      this.contentText.BackColor = System.Drawing.SystemColors.Window;
-      this.contentText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.contentText.Cursor = System.Windows.Forms.Cursors.Default;
-      this.contentText.DetectUrls = false;
-      this.contentText.Location = new System.Drawing.Point( 50, 0 );
-      this.contentText.Name = "contentText";
-      this.contentText.ReadOnly = true;
-      this.contentText.Size = new System.Drawing.Size( 399, 19 );
-      this.contentText.TabIndex = 0;
-      this.contentText.Text = "contentText";
-      this.contentText.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler( this.ContentLinkClicked );
-      this.contentText.Click += new System.EventHandler( this.ContentClick );
-      this.contentText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.ContentMouseDown );
-      // 
-      // imgMain
-      // 
-      this.imgMain.BackColor = System.Drawing.Color.Transparent;
-      this.imgMain.Location = new System.Drawing.Point( 8, 8 );
-      this.imgMain.Name = "imgMain";
-      this.imgMain.Size = new System.Drawing.Size( 32, 32 );
-      this.imgMain.TabIndex = 0;
-      this.imgMain.TabStop = false;
-      // 
       // EmulatedTaskDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF( 6F, 13F );
@@ -359,10 +353,10 @@ namespace TaskDialogNet.UserInterface
       this.pnlFooter.ResumeLayout( false );
       ( (System.ComponentModel.ISupportInitialize)( this.imgFooter ) ).EndInit();
       this.pnlMainInstruction.ResumeLayout( false );
+      ( (System.ComponentModel.ISupportInitialize)( this.imgMain ) ).EndInit();
       this.pnlContent.ResumeLayout( false );
       this.pnlExpandedInfo.ResumeLayout( false );
       this.progressBarPanel.ResumeLayout( false );
-      ( (System.ComponentModel.ISupportInitialize)( this.imgMain ) ).EndInit();
       this.ResumeLayout( false );
 
     }
@@ -389,7 +383,7 @@ namespace TaskDialogNet.UserInterface
     private System.Windows.Forms.Panel pnlRadioButtons;
     private System.Windows.Forms.ImageList SecurityIcons;
     private System.Windows.Forms.Timer callbackTimer;
-    private System.Windows.Forms.TableLayoutPanel commonButtonPanel;
+    private System.Windows.Forms.FlowLayoutPanel commonButtonPanel;
     private System.Windows.Forms.Button focusButton;
     private System.Windows.Forms.Panel progressBarPanel;
     private ProgressBar progressBar;
