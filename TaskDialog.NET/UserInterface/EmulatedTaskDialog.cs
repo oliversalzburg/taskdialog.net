@@ -488,24 +488,38 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup common buttons
+      // Find widest common button
+      int maxButtonWidth = commonButtonPanel.Controls.OfType<Button>().Aggregate( 0, ( current, button ) => Math.Max( current, button.Width ) );
       pnlButtons.Height = Math.Max( pnlButtons.Height, commonButtonPanel.Top * 2 + commonButtonPanel.Height );
 
       // Adjust verify checkbox
       if( showVerifyCheckbox ) {
-        int       desiredWidth      = commonButtonPanel.Left - verifyCheckBox.Left;
+        int       desiredWidth      = Math.Min( commonButtonPanel.Right - maxButtonWidth - 20, commonButtonPanel.Left - verifyCheckBox.Left );
         SizeF     verifyTextBounds  = new SizeF( desiredWidth, 5000.0F );
         Graphics  g                 = Graphics.FromHwnd( verifyCheckBox.Handle );
         SizeF     textSize          = g.MeasureString( verifyCheckBox.Text, verifyCheckBox.Font, verifyTextBounds );
 
         verifyCheckBox.AutoSize = false;
-        verifyCheckBox.Width    = desiredWidth;
+        verifyCheckBox.Width    = Math.Max( desiredWidth, (int)textSize.Width );
         verifyCheckBox.Height   = (int)textSize.Height + 10;
+      }
+
+      // Adjust common buttons again
+      int leftMost = Math.Max( ( !string.IsNullOrEmpty( ExpandedInformation ) ) ? showHideDetails.Right : 0, ( showVerifyCheckbox ) ? verifyCheckBox.Right : 0 );
+      
+      if( UseCommandLinks ) {
+        commonButtonPanel.MaximumSize = new Size( commonButtonPanel.Right - leftMost + 3, 0 );
+        commonButtonPanel.Left = verifyCheckBox.Right;
+
+      } else {
+        Width = commonButtonPanel.Width + leftMost + commonButtonPanel.Margin.Right * 4 + 4;
       }
 
       if( !showVerifyCheckbox && string.IsNullOrEmpty( ExpandedInformation ) && CommonButtons == CommonButtons.None ) {
         pnlButtons.Visible = false;
 
       } else {
+        pnlButtons.Height = Math.Max( verifyCheckBox.Height + verifyCheckBox.Top, commonButtonPanel.Height );
         formHeight += pnlButtons.Height;
       }
 

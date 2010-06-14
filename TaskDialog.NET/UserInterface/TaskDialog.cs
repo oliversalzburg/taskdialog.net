@@ -87,15 +87,7 @@ namespace TaskDialogNet.UserInterface {
     #endregion
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    public static void SetProgressBarProgress( int progress ) {
-      
-    }
-
     #region ShowTaskDialogBox
-
-    //--------------------------------------------------------------------------------
     public static DialogResult ShowTaskDialogBox( IWin32Window owner,
                                                   string title,
                                                   string mainInstruction,
@@ -174,7 +166,7 @@ namespace TaskDialogNet.UserInterface {
       taskDialog.PositionRelativeToWindow = true;
       taskDialog.RtlLayout                = false;
       taskDialog.CanBeMinimized           = false;
-      taskDialog.UseCommandLinks          = ( taskDialog.Buttons.Count > 0 );
+      taskDialog.UseCommandLinks          = false; //( taskDialog.Buttons.Count > 0 );
       taskDialog.UseCommandLinksNoIcon    = false;
       taskDialog.VerificationText         = verificationText;
       taskDialog.VerificationFlagChecked  = false;
