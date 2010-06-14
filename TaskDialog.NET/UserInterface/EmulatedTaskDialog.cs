@@ -181,7 +181,12 @@ namespace TaskDialogNet.UserInterface {
     #endregion
 
     #region BuildForm
-
+    /// <summary>
+    /// Draw the background of the main instruction panel.
+    /// A gradient will be drawn from the left to the right side.
+    /// </summary>
+    /// <param name="leftColor">The color on the far left side of the panel.</param>
+    /// <param name="rightColor">The color on the far right side of the panel.</param>
     private void DrawInstructionBackground( Color leftColor, Color rightColor ) {
       Bitmap gradientBitmap = new Bitmap( pnlMainInstruction.Width, pnlMainInstruction.Height );
       Graphics graphics = Graphics.FromImage( gradientBitmap );
@@ -193,6 +198,9 @@ namespace TaskDialogNet.UserInterface {
       pnlMainInstruction.BackgroundImage = gradientBitmap;
     }
 
+    /// <summary>
+    /// Create all controls needed for the current settings.
+    /// </summary>
     private void BuildForm() {
       // Setup Content
       if( !string.IsNullOrEmpty( Content ) ) {
@@ -235,6 +243,8 @@ namespace TaskDialogNet.UserInterface {
             commandButton = new CommandButton { Parent = pnlCommandButtons };
           } else {
             commandButton = new Button { Parent = commonButtonPanel };
+            ( (Button)commandButton ).AutoSizeMode = AutoSizeMode.GrowOnly;
+            commandButton.AutoSize = true;
           }
 
           if( _isVista ) {
