@@ -16,10 +16,24 @@ namespace TaskDialogDemo {
     }
 
     private void button1_Click( object sender, EventArgs e ) {
+      TaskDialog.ButtonClicked += TaskDialog_ButtonClicked;
+
+      TaskDialog.ForceEmulationMode = forceEmulationCheckBox.Checked;
+      DialogResult result = TaskDialog.ShowTaskDialogBox( "title", "mainInstruction", "content", "Do you require additional information regarding this matter?", "footer", "This is the so-called verification text. It is quite long to check common button layout.",
+                                                                     "radio1|radio2", "commandButton", CommonButtons.Ok|CommonButtons.Cancel, CommonIcon.Information,
+                                                                     CommonIcon.Information, ProgressBarStyle.None );
+
+      TaskDialog.ButtonClicked -= TaskDialog_ButtonClicked;
+      /*
       TaskDialog.MessageBox( "title", "mainInstruction", "content", "expandedInfo", "footer",
                                                       "verificationText", CommonButtons.Ok,
-                                                      TaskDialogNet.UserInterface.CommonIcon.Information,
-                                                      TaskDialogNet.UserInterface.CommonIcon.Information, ProgressBarStyle.None );
+                                                      CommonIcon.Information,
+                                                      CommonIcon.Information, ProgressBarStyle.None );
+      */
+    }
+
+    void TaskDialog_ButtonClicked( ITaskDialog sender, ButtonClickedArgs args ) {
+      return;
     }
   }
 }
