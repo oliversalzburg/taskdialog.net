@@ -166,7 +166,7 @@ namespace TaskDialogNet.UserInterface {
       taskDialog.ShowProgressBar          = ( progressBarStyle == ProgressBarStyle.Continous ) ? true : false;
       taskDialog.ShowMarqueeProgressBar   = ( progressBarStyle == ProgressBarStyle.Marquee ) ? true : false;
       taskDialog.AllowDialogCancellation  = ( ( buttons & CommonButtons.Cancel ) >= 0 || 
-                                             ( buttons & CommonButtons.Close  ) >= 0 );
+                                              ( buttons & CommonButtons.Close  ) >= 0 );
       
       taskDialog.CallbackTimer            = true;
       taskDialog.ExpandedByDefault        = false;

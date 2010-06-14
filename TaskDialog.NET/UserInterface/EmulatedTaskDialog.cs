@@ -848,7 +848,6 @@ namespace TaskDialogNet.UserInterface {
         if( InvokeButtonClicked( this, buttonClickedArgs ) ) return;
         
         DialogResult = (DialogResult)button.Tag;
-        Close();
       }
     }
 
