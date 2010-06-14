@@ -494,7 +494,7 @@ namespace TaskDialogNet.UserInterface {
 
       // Adjust verify checkbox
       if( showVerifyCheckbox ) {
-        int       desiredWidth      = Math.Min( commonButtonPanel.Right - maxButtonWidth - 20, commonButtonPanel.Left - verifyCheckBox.Left );
+        int       desiredWidth      = Math.Max( commonButtonPanel.Right - maxButtonWidth - 20, commonButtonPanel.Left - verifyCheckBox.Left );
         SizeF     verifyTextBounds  = new SizeF( desiredWidth, 5000.0F );
         Graphics  g                 = Graphics.FromHwnd( verifyCheckBox.Handle );
         SizeF     textSize          = g.MeasureString( verifyCheckBox.Text, verifyCheckBox.Font, verifyTextBounds );
@@ -509,17 +509,17 @@ namespace TaskDialogNet.UserInterface {
       
       if( UseCommandLinks ) {
         commonButtonPanel.MaximumSize = new Size( commonButtonPanel.Right - leftMost + 3, 0 );
-        commonButtonPanel.Left = verifyCheckBox.Right;
 
       } else {
         Width = commonButtonPanel.Width + leftMost + commonButtonPanel.Margin.Right * 4 + 4;
       }
+      commonButtonPanel.Left = Width - commonButtonPanel.Width - 8;
 
       if( !showVerifyCheckbox && string.IsNullOrEmpty( ExpandedInformation ) && CommonButtons == CommonButtons.None ) {
         pnlButtons.Visible = false;
 
       } else {
-        pnlButtons.Height = Math.Max( verifyCheckBox.Height + verifyCheckBox.Top, commonButtonPanel.Height );
+        pnlButtons.Height = Math.Max( verifyCheckBox.Height + verifyCheckBox.Top, commonButtonPanel.Height + commonButtonPanel.Top * 2 );
         formHeight += pnlButtons.Height;
       }
 

@@ -85,7 +85,7 @@ namespace TaskDialogNet.UserInterface
       this.commonButtonPanel.AutoSize = true;
       this.commonButtonPanel.Location = new System.Drawing.Point( 374, 6 );
       this.commonButtonPanel.Name = "commonButtonPanel";
-      this.commonButtonPanel.Size = new System.Drawing.Size( 75, 45 );
+      this.commonButtonPanel.Size = new System.Drawing.Size( 75, 23 );
       this.commonButtonPanel.TabIndex = 5;
       // 
       // verifyCheckBox

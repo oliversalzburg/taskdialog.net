@@ -166,7 +166,7 @@ namespace TaskDialogNet.UserInterface {
       taskDialog.PositionRelativeToWindow = true;
       taskDialog.RtlLayout                = false;
       taskDialog.CanBeMinimized           = false;
-      taskDialog.UseCommandLinks          = false; //( taskDialog.Buttons.Count > 0 );
+      taskDialog.UseCommandLinks          = ( taskDialog.Buttons.Count > 0 );
       taskDialog.UseCommandLinksNoIcon    = false;
       taskDialog.VerificationText         = verificationText;
       taskDialog.VerificationFlagChecked  = false;
