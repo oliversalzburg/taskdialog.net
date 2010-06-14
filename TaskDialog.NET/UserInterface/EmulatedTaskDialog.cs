@@ -230,7 +230,13 @@ namespace TaskDialogNet.UserInterface {
       // Setup CommandButtons
       if( Buttons.Count >= 0 ) {
         foreach( TaskDialogButton button in Buttons ) {
-          CommandButton commandButton = new CommandButton { Parent = pnlCommandButtons };
+          Control commandButton;
+          if( UseCommandLinks ) {
+            commandButton = new CommandButton { Parent = pnlCommandButtons };
+          } else {
+            commandButton = new Button { Parent = commonButtonPanel };
+          }
+
           if( _isVista ) {
             commandButton.Font = new Font( commandButton.Font, FontStyle.Regular );
           }
