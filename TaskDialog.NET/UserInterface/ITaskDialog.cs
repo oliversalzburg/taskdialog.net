@@ -139,6 +139,18 @@ namespace TaskDialogNet.UserInterface {
     int Show( IWin32Window owner, out bool verificationFlagChecked, out int radioButtonResult );
 
     /// <summary>
+    /// Create a TaskDialog from a TaskDialogConfig instance.
+    /// </summary>
+    /// <param name="taskConfig">A TaskDialogConfig instance that describes the TaskDialog.</param>
+    /// <param name="button">The button that was clicked to close the TaskDialog.</param>
+    /// <param name="radioButton">The radio button that was selected in the TaskDialog.</param>
+    /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
+    /// <returns></returns>
+    int TaskDialogIndirect( TaskDialogConfig taskConfig, out int button, out int radioButton,
+                            out bool verificationFlagChecked );
+
+
+    /// <summary>
     /// Simulate the action of a button click in the TaskDialog. This can be a DialogResult value 
     /// or the ButtonID set on a TasDialogButton set on TaskDialog.Buttons.
     /// </summary>

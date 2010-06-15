@@ -684,6 +684,17 @@ namespace TaskDialogNet.UserInterface {
       return PrivateShow( hwndOwner, out verificationFlagChecked, out radioButtonResult );
     }
 
+    /// <summary>
+    /// Create a TaskDialog from a TaskDialogConfig instance.
+    /// </summary>
+    /// <param name="taskConfig">A TaskDialogConfig instance that describes the TaskDialog.</param>
+    /// <param name="button">The button that was clicked to close the TaskDialog.</param>
+    /// <param name="radioButton">The radio button that was selected in the TaskDialog.</param>
+    /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
+    /// <returns></returns>
+    public int TaskDialogIndirect( TaskDialogConfig taskConfig, out int button, out int radioButton, out bool verificationFlagChecked ) {
+      throw new NotImplementedException();
+    }
     #region Interface Methods
     /// <summary>
     /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,

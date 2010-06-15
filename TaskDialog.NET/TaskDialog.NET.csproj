@@ -73,6 +73,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UserInterface\TaskDialog.cs" />
+    <Compile Include="UserInterface\TaskDialogConfig.cs" />
     <Compile Include="UserInterface\TransparentPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
