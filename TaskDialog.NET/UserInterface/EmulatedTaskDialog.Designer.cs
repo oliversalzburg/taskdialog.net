@@ -43,14 +43,14 @@ namespace TaskDialogNet.UserInterface
       this.imgFooter = new System.Windows.Forms.PictureBox();
       this.panel5 = new System.Windows.Forms.Panel();
       this.panel3 = new System.Windows.Forms.Panel();
-      this.pnlCommandButtons = new System.Windows.Forms.Panel();
+      this.commandButtonsPanel = new System.Windows.Forms.Panel();
       this.pnlMainInstruction = new System.Windows.Forms.Panel();
       this.imgMain = new TaskDialogNet.UserInterface.TransparentPictureBox();
       this.pnlContent = new System.Windows.Forms.Panel();
       this.contentText = new TaskDialogNet.UserInterface.RichTextBoxEx();
       this.pnlExpandedInfo = new System.Windows.Forms.Panel();
       this.expandedInfoText = new TaskDialogNet.UserInterface.RichTextBoxEx();
-      this.pnlRadioButtons = new System.Windows.Forms.Panel();
+      this.radioButtonsPanel = new System.Windows.Forms.Panel();
       this.SecurityIcons = new System.Windows.Forms.ImageList( this.components );
       this.callbackTimer = new System.Windows.Forms.Timer( this.components );
       this.focusButton = new System.Windows.Forms.Button();
@@ -192,13 +192,13 @@ namespace TaskDialogNet.UserInterface
       this.panel3.Size = new System.Drawing.Size( 454, 1 );
       this.panel3.TabIndex = 1;
       // 
-      // pnlCommandButtons
+      // commandButtonsPanel
       // 
-      this.pnlCommandButtons.Dock = System.Windows.Forms.DockStyle.Top;
-      this.pnlCommandButtons.Location = new System.Drawing.Point( 0, 223 );
-      this.pnlCommandButtons.Name = "pnlCommandButtons";
-      this.pnlCommandButtons.Size = new System.Drawing.Size( 454, 99 );
-      this.pnlCommandButtons.TabIndex = 4;
+      this.commandButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+      this.commandButtonsPanel.Location = new System.Drawing.Point( 0, 223 );
+      this.commandButtonsPanel.Name = "commandButtonsPanel";
+      this.commandButtonsPanel.Size = new System.Drawing.Size( 454, 99 );
+      this.commandButtonsPanel.TabIndex = 4;
       // 
       // pnlMainInstruction
       // 
@@ -271,13 +271,13 @@ namespace TaskDialogNet.UserInterface
       this.expandedInfoText.Click += new System.EventHandler( this.ExpandedInfoClick );
       this.expandedInfoText.MouseDown += new System.Windows.Forms.MouseEventHandler( this.ExpandedInfoMouseDown );
       // 
-      // pnlRadioButtons
+      // radioButtonsPanel
       // 
-      this.pnlRadioButtons.Dock = System.Windows.Forms.DockStyle.Top;
-      this.pnlRadioButtons.Location = new System.Drawing.Point( 0, 122 );
-      this.pnlRadioButtons.Name = "pnlRadioButtons";
-      this.pnlRadioButtons.Size = new System.Drawing.Size( 454, 101 );
-      this.pnlRadioButtons.TabIndex = 3;
+      this.radioButtonsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+      this.radioButtonsPanel.Location = new System.Drawing.Point( 0, 122 );
+      this.radioButtonsPanel.Name = "radioButtonsPanel";
+      this.radioButtonsPanel.Size = new System.Drawing.Size( 454, 101 );
+      this.radioButtonsPanel.TabIndex = 3;
       // 
       // SecurityIcons
       // 
@@ -328,12 +328,13 @@ namespace TaskDialogNet.UserInterface
       this.Controls.Add( this.focusButton );
       this.Controls.Add( this.pnlFooter );
       this.Controls.Add( this.pnlButtons );
-      this.Controls.Add( this.pnlCommandButtons );
-      this.Controls.Add( this.pnlRadioButtons );
+      this.Controls.Add( this.commandButtonsPanel );
+      this.Controls.Add( this.radioButtonsPanel );
       this.Controls.Add( this.progressBarPanel );
       this.Controls.Add( this.pnlExpandedInfo );
       this.Controls.Add( this.pnlContent );
       this.Controls.Add( this.pnlMainInstruction );
+      this.DoubleBuffered = true;
       this.Font = new System.Drawing.Font( "Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ( (byte)( 0 ) ) );
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.KeyPreview = true;
@@ -373,13 +374,13 @@ namespace TaskDialogNet.UserInterface
     private RichTextBoxEx footerText;
     private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.Label showHideDetails;
-    private System.Windows.Forms.Panel pnlCommandButtons;
+    private System.Windows.Forms.Panel commandButtonsPanel;
     private System.Windows.Forms.CheckBox verifyCheckBox;
     private System.Windows.Forms.Panel pnlMainInstruction;
     private System.Windows.Forms.Panel pnlContent;
     private System.Windows.Forms.Panel pnlExpandedInfo;
     private RichTextBoxEx expandedInfoText;
-    private System.Windows.Forms.Panel pnlRadioButtons;
+    private System.Windows.Forms.Panel radioButtonsPanel;
     private System.Windows.Forms.ImageList SecurityIcons;
     private System.Windows.Forms.Timer callbackTimer;
     private System.Windows.Forms.FlowLayoutPanel commonButtonPanel;

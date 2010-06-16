@@ -149,10 +149,11 @@ namespace TaskDialogNet.UserInterface {
       progressBar.Maximum = 100;
 
       // Setup RadioButtons
+      radioButtonsPanel.Controls.Clear();
       if( TaskConfig.RadioButtons.Count > 0 ) {
         foreach( TaskDialogButton t in TaskConfig.RadioButtons ) {
           RadioButton radioButton = new RadioButton {
-            Parent  = pnlRadioButtons,
+            Parent  = radioButtonsPanel,
             Text    = t.ButtonText,
             Tag     = t.ButtonId,
             Checked = ( TaskConfig.DefaultRadioButton == t.ButtonId )
@@ -165,11 +166,12 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup CommandButtons
+      commandButtonsPanel.Controls.Clear();
       if( TaskConfig.Buttons.Count >= 0 ) {
         foreach( TaskDialogButton button in TaskConfig.Buttons ) {
           Control commandButton;
           if( TaskConfig.Flags.UseCommandLinks ) {
-            commandButton = new CommandButton { Parent = pnlCommandButtons };
+            commandButton = new CommandButton { Parent = commandButtonsPanel };
           } else {
             commandButton = new Button { Parent = commonButtonPanel };
             ( (Button)commandButton ).AutoSizeMode = AutoSizeMode.GrowOnly;
@@ -189,6 +191,7 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup common buttons
+      commonButtonPanel.Controls.Clear();
       if( TaskConfig.CommonButtons == CommonButtons.None ) {
         TaskConfig.CommonButtons = CommonButtons.Ok;
       }
@@ -384,26 +387,26 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup RadioButtons
-      pnlRadioButtons.Visible = ( TaskConfig.RadioButtons.Count > 0 );
+      radioButtonsPanel.Visible = ( TaskConfig.RadioButtons.Count > 0 );
       if( TaskConfig.RadioButtons.Count > 0 ) {
         int pnlHeight = 12;
         int lastHeight = 0;
-        foreach( RadioButton radioButton in pnlRadioButtons.Controls.OfType<RadioButton>().OrderBy( r => r.Tag ) ) {
+        foreach( RadioButton radioButton in radioButtonsPanel.Controls.OfType<RadioButton>().OrderBy( r => r.Tag ) ) {
           radioButton.Location = new Point( 60, 4 + lastHeight );
           radioButton.Width    = Width - radioButton.Left - 15;
           pnlHeight   += radioButton.Height;
           lastHeight  += radioButton.Height;
         }
-        pnlRadioButtons.Height = pnlHeight;
-        formHeight += pnlRadioButtons.Height;
+        radioButtonsPanel.Height = pnlHeight;
+        formHeight += radioButtonsPanel.Height;
       }
 
       // Setup CommandButtons
-      pnlCommandButtons.Visible = ( TaskConfig.Buttons.Count >= 0 );
+      commandButtonsPanel.Visible = ( TaskConfig.Buttons.Count >= 0 );
       if( TaskConfig.Buttons.Count >= 0 ) {
         int t = 8;
         int pnlHeight = 16;
-        foreach( CommandButton commandButton in pnlCommandButtons.Controls.OfType<CommandButton>().OrderBy( b => b.Tag ) ) {
+        foreach( CommandButton commandButton in commandButtonsPanel.Controls.OfType<CommandButton>().OrderBy( b => b.Tag ) ) {
           commandButton.Location = new Point( 50, t );
           if( _isVista ) {
             commandButton.Font = new Font( commandButton.Font, FontStyle.Regular );
@@ -412,8 +415,8 @@ namespace TaskDialogNet.UserInterface {
           t         += commandButton.Height;
           pnlHeight += commandButton.Height;
         }
-        pnlCommandButtons.Height = pnlHeight;
-        formHeight += pnlCommandButtons.Height;
+        commandButtonsPanel.Height = pnlHeight;
+        formHeight += commandButtonsPanel.Height;
       }
 
       // Setup common buttons
@@ -435,7 +438,8 @@ namespace TaskDialogNet.UserInterface {
 
       // Adjust common buttons again
       int leftMost = Math.Max( ( !string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) ) ? showHideDetails.Right : 0, ( showVerifyCheckbox ) ? verifyCheckBox.Right : 0 );
-      
+
+      commonButtonPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
       if( TaskConfig.Flags.UseCommandLinks ) {
         commonButtonPanel.MaximumSize = new Size( commonButtonPanel.Right - leftMost + 3, 0 );
 
@@ -521,7 +525,7 @@ namespace TaskDialogNet.UserInterface {
         InvokeButtonClicked( this, new ButtonClickedArgs( (int)button.Tag ) );
         return;
       }
-      IEnumerable<CommandButton> buttons = pnlCommandButtons.Controls.OfType<CommandButton>();
+      IEnumerable<CommandButton> buttons = commandButtonsPanel.Controls.OfType<CommandButton>();
       foreach( CommandButton button in buttons.Where( button => (int)button.Tag == buttonId ) ) {
         InvokeButtonClicked( this, new ButtonClickedArgs( (int)button.Tag ) );
         return;
@@ -534,7 +538,7 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="buttonId">Indicates the button ID to be selected.</param>
     public void ClickRadioButton( int buttonId ) {
-      RadioButton button = pnlRadioButtons.Controls.OfType<RadioButton>().Where( b => (int)b.Tag == buttonId ).First();
+      RadioButton button = radioButtonsPanel.Controls.OfType<RadioButton>().Where( b => (int)b.Tag == buttonId ).First();
       if( button != null ) {
         button.Select();
         InvokeRadioButtonClicked( this, new ButtonClickedArgs( buttonId ) );
@@ -560,7 +564,7 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="buttonId">Indicates the button ID to be enabled or diabled.</param>
     /// <param name="enable">Enambe the button if true. Disable the button if false.</param>
     public void EnableButton( int buttonId, bool enable ) {
-      IEnumerable<CommandButton> buttons = pnlCommandButtons.Controls.OfType<CommandButton>();
+      IEnumerable<CommandButton> buttons = commandButtonsPanel.Controls.OfType<CommandButton>();
       foreach( CommandButton button in buttons.Where( button => (int)button.Tag == buttonId ) ) {
         button.Enabled = enable;
         return;
@@ -594,7 +598,7 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="buttonId">Indicates the button ID to be enabled or diabled.</param>
     /// <param name="enable">Enambe the button if true. Disable the button if false.</param>
     public void EnableRadioButton( int buttonId, bool enable ) {
-      RadioButton button = pnlRadioButtons.Controls.OfType<RadioButton>().Where( b => (int)b.Tag == buttonId ).First();
+      RadioButton button = radioButtonsPanel.Controls.OfType<RadioButton>().Where( b => (int)b.Tag == buttonId ).First();
       if( button != null ) {
         button.Enabled = enable;
       }
@@ -623,7 +627,9 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="page">The next page.</param>
     public void NavigatePage( TaskDialogConfig page ) {
-      throw new NotImplementedException();
+      TaskConfig = page;
+      BuildForm();
+      if( null != Navigated ) Navigated( this, EventArgs.Empty );
     }
 
     /// <summary>
