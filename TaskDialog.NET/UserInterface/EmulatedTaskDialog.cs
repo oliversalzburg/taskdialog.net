@@ -14,7 +14,7 @@ namespace TaskDialogNet.UserInterface {
     public new event TaskDialogEventHandler Created;
     public event TaskDialogEventHandler Destroyed;
     public event TaskDialogEventHandler DialogConstructed;
-    public event TaskDialogEventHandler ExpandoButtonClicked;
+    public event TaskDialogEventHandler<ExpandoButtonClickedArgs> ExpandoButtonClicked;
     public event TaskDialogEventHandler Help;
     public event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
     public event TaskDialogEventHandler Navigated;
@@ -870,7 +870,7 @@ namespace TaskDialogNet.UserInterface {
         Height += pnlExpandedInfo.Height;
       else
         Height -= pnlExpandedInfo.Height;
-      if( null != ExpandoButtonClicked ) ExpandoButtonClicked( this, EventArgs.Empty );
+      if( null != ExpandoButtonClicked ) ExpandoButtonClicked( this, new ExpandoButtonClickedArgs( IsExpanded ) );
     }
 
     //--------------------------------------------------------------------------------
@@ -941,7 +941,7 @@ namespace TaskDialogNet.UserInterface {
         // Kinda weird, but that's how it seems to be.
         ButtonClickedArgs buttonClickedArgs = new ButtonClickedArgs( 2 );
         if( !TaskConfig.Flags.AllowDialogCancellation || InvokeButtonClicked( this, buttonClickedArgs ) ) e.Cancel = true;
-        DialogResult = (DialogResult)_cancelButtonId;
+        DialogResult = DialogResult.Cancel;
       }
     }
 

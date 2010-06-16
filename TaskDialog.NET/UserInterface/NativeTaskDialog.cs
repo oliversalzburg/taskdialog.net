@@ -266,7 +266,7 @@ namespace TaskDialogNet.UserInterface {
     public event TaskDialogEventHandler Created;
     public event TaskDialogEventHandler Destroyed;
     public event TaskDialogEventHandler DialogConstructed;
-    public event TaskDialogEventHandler ExpandoButtonClicked;
+    public event TaskDialogEventHandler<ExpandoButtonClickedArgs> ExpandoButtonClicked;
     public event TaskDialogEventHandler Help;
     public event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
     public event TaskDialogEventHandler Navigated;
@@ -1083,7 +1083,7 @@ namespace TaskDialogNet.UserInterface {
           break;
 
         case VistaTaskDialogNotification.ExpandButtonClicked:
-          if( null != ExpandoButtonClicked ) ExpandoButtonClicked( this, EventArgs.Empty );
+          if( null != ExpandoButtonClicked ) ExpandoButtonClicked( this, new ExpandoButtonClickedArgs( ( (int)wparam == 1 ) ? true : false ) );
           break;
 
         default:

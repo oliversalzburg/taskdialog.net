@@ -12,6 +12,14 @@ namespace TaskDialogNet.UserInterface {
     }
   }
 
+  public class ExpandoButtonClickedArgs : EventArgs {
+    public bool IsExpanded { get; private set; }
+
+    public ExpandoButtonClickedArgs( bool isExpanded ) {
+      IsExpanded = isExpanded;
+    }
+  }
+
   public class HyperlinkClickedArgs : EventArgs {
     public string Url { get; private set; }
 
@@ -39,7 +47,7 @@ namespace TaskDialogNet.UserInterface {
     event TaskDialogEventHandler Created;
     event TaskDialogEventHandler Destroyed;
     event TaskDialogEventHandler DialogConstructed;
-    event TaskDialogEventHandler ExpandoButtonClicked;
+    event TaskDialogEventHandler<ExpandoButtonClickedArgs> ExpandoButtonClicked;
     event TaskDialogEventHandler Help;
     event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
     event TaskDialogEventHandler Navigated;

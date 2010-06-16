@@ -27,7 +27,7 @@ namespace TaskDialogNet.UserInterface {
     public static event TaskDialogEventHandler Created;
     public static event TaskDialogEventHandler Destroyed;
     public static event TaskDialogEventHandler DialogConstructed;
-    public static event TaskDialogEventHandler ExpandoButtonClicked;
+    public static event TaskDialogEventHandler<ExpandoButtonClickedArgs> ExpandoButtonClicked;
     public static event TaskDialogEventHandler Help;
     public static event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
     public static event TaskDialogEventHandler Navigated;
@@ -56,8 +56,8 @@ namespace TaskDialogNet.UserInterface {
       if( handler != null ) handler( sender, e );
     }
 
-    private static void InvokeExpandoButtonClicked( ITaskDialog sender, EventArgs e ) {
-      TaskDialogEventHandler handler = ExpandoButtonClicked;
+    private static void InvokeExpandoButtonClicked( ITaskDialog sender, ExpandoButtonClickedArgs e ) {
+      TaskDialogEventHandler<ExpandoButtonClickedArgs> handler = ExpandoButtonClicked;
       if( handler != null ) handler( sender, e );
     }
 
@@ -268,8 +268,8 @@ namespace TaskDialogNet.UserInterface {
       InvokeHelp( sender, e );
     }
 
-    private static void TaskDialogExpandoButtonClicked( ITaskDialog sender, EventArgs e ) {
-      InvokeExpandoButtonClicked( sender, EventArgs.Empty );
+    private static void TaskDialogExpandoButtonClicked( ITaskDialog sender, ExpandoButtonClickedArgs e ) {
+      InvokeExpandoButtonClicked( sender, e );
     }
 
     private static void TaskDialogNavigated( ITaskDialog sender, EventArgs args ) {
