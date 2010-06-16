@@ -347,7 +347,7 @@ namespace TaskDialogNet.UserInterface {
       if( _mainInstructionHeight == 0 )
         GetMainInstructionTextSizeF();
       pnlMainInstruction.Height = Math.Max( mainInstructionMinSize, _mainInstructionHeight + 16 );
-
+      
       formHeight += pnlMainInstruction.Height;
 
       // Setup Content

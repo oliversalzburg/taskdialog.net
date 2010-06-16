@@ -23,6 +23,7 @@ namespace TaskDialogDemo {
       TaskDialog.ExpandoButtonClicked += TaskDialog_ExpandoButtonClicked;
       TaskDialog.Help                 += TaskDialog_Help;
       TaskDialog.HyperlinkClicked     += TaskDialog_HyperlinkClicked;
+      TaskDialog.Navigated            += TaskDialog_Navigated;
 
       TaskDialog.ForceEmulationMode = forceEmulationCheckBox.Checked;
       DialogResult result = TaskDialog.ShowTaskDialogBox(
@@ -33,7 +34,7 @@ namespace TaskDialogDemo {
         "Do you require <A HREF=\"some link\">more information</A>?",
         "This is the so-called verification text. It is quite long to check common button layout.",
         "radio1|radio2",
-        "commandButton1|commandButton2|commandButton3|commandButton4|commandButton4|commandButton4",
+        "Navigate to another page",
         CommonButtons.Ok | CommonButtons.Cancel | CommonButtons.Close | CommonButtons.No | CommonButtons.Retry | CommonButtons.Yes,
         CommonIcon.Information,
         CommonIcon.Information,
@@ -46,6 +47,11 @@ namespace TaskDialogDemo {
       TaskDialog.ExpandoButtonClicked -= TaskDialog_ExpandoButtonClicked;
       TaskDialog.Help                 -= TaskDialog_Help;
       TaskDialog.HyperlinkClicked     -= TaskDialog_HyperlinkClicked;
+      TaskDialog.Navigated            -= TaskDialog_Navigated;
+    }
+
+    void TaskDialog_Navigated( ITaskDialog sender, EventArgs args ) {
+      Console.WriteLine( "Dialog has navigated to another page." );
     }
 
     void TaskDialog_HyperlinkClicked( ITaskDialog sender, HyperlinkClickedArgs args ) {
@@ -74,6 +80,14 @@ namespace TaskDialogDemo {
 
     void TaskDialog_ButtonClicked( ITaskDialog sender, ButtonClickedArgs args ) {
       Console.WriteLine( "Button clicked: {0}", args.Id );
+      if( args.Id == 2000 ) {
+        args.PreventClosing = true;
+        TaskDialogConfig config = new TaskDialogConfig();
+        config.CommonButtons = CommonButtons.Ok;
+        config.WindowTitle = "Another page";
+        config.MainInstruction = "You just navigated to another page.";
+        sender.NavigatePage( config );
+      }
     }
   }
 }
