@@ -560,11 +560,6 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="buttonId">Indicates the button ID to be enabled or diabled.</param>
     /// <param name="enable">Enambe the button if true. Disable the button if false.</param>
     public void EnableButton( int buttonId, bool enable ) {
-      IEnumerable<Button> commonButtons = commonButtonPanel.Controls.OfType<Button>();
-      foreach( Button button in commonButtons.Where( button => (int)button.Tag == buttonId ) ) {
-        button.Enabled = enable;
-        return;
-      }
       IEnumerable<CommandButton> buttons = pnlCommandButtons.Controls.OfType<CommandButton>();
       foreach( CommandButton button in buttons.Where( button => (int)button.Tag == buttonId ) ) {
         button.Enabled = enable;
