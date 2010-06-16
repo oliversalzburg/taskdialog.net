@@ -316,13 +316,13 @@ namespace TaskDialogNet.UserInterface {
       /// Parent window handle.
       /// </summary>
       [SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )] // Managed code owns actual resource. Passed to native in syncronous call. No lifetime issues.
-        public IntPtr hwndParent;
+      public IntPtr hwndParent;
 
       /// <summary>
       /// Module instance handle for resources.
       /// </summary>
       [SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )] // Managed code owns actual resource. Passed to native in syncronous call. No lifetime issues.
-        public IntPtr hInstance;
+      public IntPtr hInstance;
 
       /// <summary>
       /// Flags.
@@ -427,7 +427,7 @@ namespace TaskDialogNet.UserInterface {
       /// Data that will be passed to the call back.
       /// </summary>
       [SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )] // Managed code owns actual resource. Passed to native in syncronous call. No lifetime issues.
-        public IntPtr lpCallbackData;
+      public IntPtr lpCallbackData;
 
       /// <summary>
       /// Width of the Task Dialog's area in DLU's.

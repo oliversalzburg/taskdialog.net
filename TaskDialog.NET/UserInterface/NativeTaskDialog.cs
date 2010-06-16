@@ -61,29 +61,48 @@ namespace TaskDialogNet.UserInterface {
     None = 0,
 
     /// <summary>
+    /// System Information icon.
+    /// </summary>
+    Information = UInt16.MaxValue - 2,
+
+    /// <summary>
     /// System warning icon.
     /// </summary>
-    //Warning = 0xFFFF, // MAKEINTRESOURCEW(-1)
+    Warning = UInt16.MaxValue,
+
     /// <summary>
     /// System Error icon.
     /// </summary>
-    //Error = 0xFFFE, // MAKEINTRESOURCEW(-2)
-    /// <summary>
-    /// System Information icon.
-    /// </summary>
-    //Information = 0xFFFD, // MAKEINTRESOURCEW(-3)
-    /// <summary>
-    /// Shield icon.
-    /// </summary>
-    //Shield = 0xFFFC, // MAKEINTRESOURCEW(-4)
-    Information = UInt16.MaxValue - 2,
-    Warning = UInt16.MaxValue,
     Error = UInt16.MaxValue - 1,
+
+    /// <summary>
+    /// Security shield warning icon.
+    /// </summary>
     SecurityWarning = UInt16.MaxValue - 5,
+    
+    /// <summary>
+    /// Security shield error icon.
+    /// </summary>
     SecurityError = UInt16.MaxValue - 6,
+
+    /// <summary>
+    /// Security shield success icon.
+    /// </summary>
     SecuritySuccess = UInt16.MaxValue - 7,
+
+    /// <summary>
+    /// Security shield icon.
+    /// </summary>
     SecurityShield = UInt16.MaxValue - 3,
+
+    /// <summary>
+    /// Security shield icon with blue background.
+    /// </summary>
     SecurityShieldBlue = UInt16.MaxValue - 4,
+
+    /// <summary>
+    /// Security shield icon with gray background.
+    /// </summary>
     SecurityShieldGray = UInt16.MaxValue - 8
   }
 
@@ -257,12 +276,6 @@ namespace TaskDialogNet.UserInterface {
     #endregion
 
     /// <summary>
-    /// Creates a default Task Dialog.
-    /// </summary>
-    public NativeTaskDialog( ) {
-    }
-
-    /// <summary>
     /// Returns true if the current operating system supports TaskDialog. If false TaskDialog.Show should not
     /// be called as the results are undefined but often results in a crash.
     /// </summary>
@@ -284,396 +297,25 @@ namespace TaskDialogNet.UserInterface {
 
     
     #region Properties
-    /*
-    #region Flags
-    /// <summary>
-    /// Enables hyperlink processing for the strings specified in the Content, ExpandedInformation
-    /// and FooterText members. When enabled, these members may be strings that contain hyperlinks
-    /// in the form: <A HREF="executablestring">Hyperlink Text</A>. 
-    /// WARNING: Enabling hyperlinks when using content from an unsafe source may cause security vulnerabilities.
-    /// Note: Task Dialog will not actually execute any hyperlinks. Hyperlink execution must be handled
-    /// in the callback function specified by Callback member.
-    /// </summary>
-    public bool EnableHyperlinks {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_ENABLE_HYPERLINKS ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_ENABLE_HYPERLINKS, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the dialog should be able to be closed using Alt-F4, Escape and the title bar’s
-    /// close button even if no cancel button is specified in either the CommonButtons or Buttons members.
-    /// </summary>
-    public bool AllowDialogCancellation {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_ALLOW_DIALOG_CANCELLATION ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_ALLOW_DIALOG_CANCELLATION, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the buttons specified in the Buttons member should be displayed as command links
-    /// (using a standard task dialog glyph) instead of push buttons.  When using command links, all
-    /// characters up to the first new line character in the ButtonText member (of the TaskDialogButton
-    /// structure) will be treated as the command link’s main text, and the remainder will be treated
-    /// as the command link’s note. This flag is ignored if the Buttons member has no entires.
-    /// </summary>
-    public bool UseCommandLinks {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the buttons specified in the Buttons member should be displayed as command links
-    /// (without a glyph) instead of push buttons. When using command links, all characters up to the
-    /// first new line character in the ButtonText member (of the TaskDialogButton structure) will be
-    /// treated as the command link’s main text, and the remainder will be treated as the command link’s
-    /// note. This flag is ignored if the Buttons member has no entires.
-    /// </summary>
-    public bool UseCommandLinksNoIcon {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS_NO_ICON ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_USE_COMMAND_LINKS_NO_ICON, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the string specified by the ExpandedInformation member should be displayed at the
-    /// bottom of the dialog’s footer area instead of immediately after the dialog’s content. This flag
-    /// is ignored if the ExpandedInformation member is null.
-    /// </summary>
-    public bool ExpandFooterArea {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_EXPAND_FOOTER_AREA ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_EXPAND_FOOTER_AREA, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the string specified by the ExpandedInformation member should be displayed
-    /// when the dialog is initially displayed. This flag is ignored if the ExpandedInformation member
-    /// is null.
-    /// </summary>
-    public bool ExpandedByDefault {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_EXPANDED_BY_DEFAULT ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_EXPANDED_BY_DEFAULT, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the verification checkbox in the dialog should be checked when the dialog is
-    /// initially displayed. This flag is ignored if the VerificationText parameter is null.
-    /// </summary>
-    public bool VerificationFlagChecked {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_VERIFICATION_FLAG_CHECKED, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that a Progress Bar should be displayed.
-    /// </summary>
-    public bool ShowProgressBar {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_SHOW_PROGRESS_BAR ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_SHOW_PROGRESS_BAR, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that an Marquee Progress Bar should be displayed.
-    /// </summary>
-    public bool ShowMarqueeProgressBar {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_SHOW_MARQUEE_PROGRESS_BAR ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_SHOW_MARQUEE_PROGRESS_BAR, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the TaskDialog’s callback should be called approximately every 200 milliseconds.
-    /// </summary>
-    public bool CallbackTimer {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_CALLBACK_TIMER ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_CALLBACK_TIMER, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the TaskDialog should be positioned (centered) relative to the owner window
-    /// passed when calling Show. If not set (or no owner window is passed), the TaskDialog is
-    /// positioned (centered) relative to the monitor.
-    /// </summary>
-    public bool PositionRelativeToWindow {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_POSITION_RELATIVE_TO_WINDOW ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_POSITION_RELATIVE_TO_WINDOW, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the TaskDialog should have right to left layout.
-    /// </summary>
-    public bool RtlLayout {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_RTL_LAYOUT ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_RTL_LAYOUT, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the TaskDialog should have no default radio button.
-    /// </summary>
-    public bool NoDefaultRadioButton {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_NO_DEFAULT_RADIO_BUTTON ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_NO_DEFAULT_RADIO_BUTTON, value ); }
-    }
-
-    /// <summary>
-    /// Indicates that the TaskDialog can be minimised. Works only if there if parent window is null. Will enable cancellation also.
-    /// </summary>
-    public bool CanBeMinimized {
-      get { return ( Flags & UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_CAN_BE_MINIMIZED ) != 0; }
-      set { SetFlag( UnsafeNativeMethods.TASKDIALOG_FLAGS.TDF_CAN_BE_MINIMIZED, value ); }
-    }
-    #endregion
-
-
-    /// <summary>
-    /// Specifies the push buttons displayed in the dialog box. This parameter may be a combination of flags.
-    /// If no common buttons are specified and no custom buttons are specified using the Buttons member, the
-    /// dialog box will contain the OK button by default.
-    /// </summary>
-    public CommonButtons CommonButtons { get; set; }
-
-    /// <summary>
-    /// The string to be used for the dialog box title. If this parameter is NULL, the filename of the executable program is used.
-    /// </summary>
-    public string WindowTitle { get; set; }
-
-    /// <summary>
-    /// Specifies a built in icon for the main icon in the dialog. If this is set to none
-    /// and the CustomMainIcon is null then no main icon will be displayed.
-    /// </summary>
-    public CommonIcon MainIcon { get; set; }
-
-    /// <summary>
-    /// Specifies a custom icon for the main icon in the dialog. If this is set to none
-    /// and the CustomMainIcon member is null then no main icon will be displayed.
-    /// </summary>
-    public System.Drawing.Icon CustomMainIcon { get; set; }
-
-    /// <summary>
-    /// The string to be used for the main instruction.
-    /// </summary>
-    public string MainInstruction { get; set; }
-
-    /// <summary>
-    /// The string to be used for the dialog’s primary content. If the EnableHyperlinks member is true,
-    /// then this string may contain hyperlinks in the form: <A HREF="executablestring">Hyperlink Text</A>. 
-    /// WARNING: Enabling hyperlinks when using content from an unsafe source may cause security vulnerabilities.
-    /// </summary>
-    public string Content { get; set; }
-
-    /// <summary>
-    /// Specifies the custom push buttons to display in the dialog. Use CommonButtons member for
-    /// common buttons; OK, Yes, No, Retry and Cancel, and Buttons when you want different text
-    /// on the push buttons.
-    /// </summary>
-    public List<TaskDialogButton> Buttons { get; set; }
-
-    /// <summary>
-    /// Indicates the default button for the dialog. This may be any of the values specified
-    /// in ButtonId members of one of the TaskDialogButton structures in the Buttons array,
-    /// or one a DialogResult value that corresponds to a buttons specified in the CommonButtons Member.
-    /// If this member is zero or its value does not correspond to any button ID in the dialog,
-    /// then the first button in the dialog will be the default. 
-    /// </summary>
-    public int DefaultButton { get; set; }
-
-    /// <summary>
-    /// Specifies the radio buttons to display in the dialog.
-    /// </summary>
-    public List<TaskDialogButton> RadioButtons { get; set; }
-
-    /// <summary>
-    /// Indicates the default radio button for the dialog. This may be any of the values specified
-    /// in ButtonId members of one of the TaskDialogButton structures in the RadioButtons array.
-    /// If this member is zero or its value does not correspond to any radio button ID in the dialog,
-    /// then the first button in RadioButtons will be the default.
-    /// The property NoDefaultRadioButton can be set to have no default.
-    /// </summary>
-    public int DefaultRadioButton { get; set; }
-
-    /// <summary>
-    /// The string to be used to label the verification checkbox. If this member is null, the
-    /// verification checkbox is not displayed in the dialog box.
-    /// </summary>
-    public string VerificationText { get; set; }
-
-    /// <summary>
-    /// The string to be used for displaying additional information. The additional information is
-    /// displayed either immediately below the content or below the footer text depending on whether
-    /// the ExpandFooterArea member is true. If the EnameHyperlinks member is true, then this string
-    /// may contain hyperlinks in the form: <A HREF="executablestring">Hyperlink Text</A>.
-    /// WARNING: Enabling hyperlinks when using content from an unsafe source may cause security vulnerabilities.
-    /// </summary>
-    public string ExpandedInformation { get; set; }
-
-    /// <summary>
-    /// The string to be used to label the button for collapsing the expanded information. This
-    /// member is ignored when the ExpandedInformation member is null. If this member is null
-    /// and the CollapsedControlText is specified, then the CollapsedControlText value will be
-    /// used for this member as well.
-    /// </summary>
-    public string ExpandedControlText { get; set; }
-
-    /// <summary>
-    /// The string to be used to label the button for expanding the expanded information. This
-    /// member is ignored when the ExpandedInformation member is null.  If this member is null
-    /// and the ExpandedControlText is specified, then the ExpandedControlText value will be
-    /// used for this member as well.
-    /// </summary>
-    public string CollapsedControlText { get; set; }
-
-    /// <summary>
-    /// Specifies a built in icon for the icon to be displayed in the footer area of the
-    /// dialog box. If this is set to none and the CustomFooterIcon member is null then no
-    /// footer icon will be displayed.
-    /// </summary>
-    public CommonIcon FooterIcon { get; set; }
-
-    /// <summary>
-    /// Specifies a custom icon for the icon to be displayed in the footer area of the
-    /// dialog box. If this is set to none and the CustomFooterIcon member is null then no
-    /// footer icon will be displayed.
-    /// </summary>
-    public System.Drawing.Icon CustomFooterIcon { get; set; }
-
-    /// <summary>
-    /// The string to be used in the footer area of the dialog box. If the EnableHyperlinks member
-    /// is true, then this string may contain hyperlinks in the form: <A HREF="executablestring">
-    /// Hyperlink Text</A>.
-    /// WARNING: Enabling hyperlinks when using content from an unsafe source may cause security vulnerabilities.
-    /// </summary>
-    public string Footer { get; set; }
-
-    /// <summary>
-    /// width of the Task Dialog's client area in DLU's. If 0, Task Dialog will calculate the ideal width.
-    /// </summary>
-    public int Width { get; set; }
-    */
-
     /// <summary>
     /// The window handle of the TaskDialog
     /// </summary>
     [SuppressMessage( "Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources" )] // We don't own the window.
     private IntPtr WindowHandle { get; set; }
-    #endregion
-    
 
     /// <summary>
     /// The configuration of the TaskDialog.
     /// </summary>
     private TaskDialogConfig TaskConfig { get; set; }
-    
 
     /// <summary>
     /// Reference that is passed to the callback.
     /// </summary>
     private object CallbackData { get; set; }
+    #endregion
+ 
 
     #region Methods
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( ) {
-      bool verificationFlagChecked;
-      int radioButtonResult;
-      return Show( IntPtr.Zero, out verificationFlagChecked, out radioButtonResult );
-    }
-    */
-
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="owner">Owner window the task Dialog will modal to.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IWin32Window owner ) {
-      bool verificationFlagChecked;
-      int radioButtonResult;
-      return Show(
-        ( owner == null ? IntPtr.Zero : owner.Handle ),
-        out verificationFlagChecked,
-        out radioButtonResult );
-    }
-    */
-
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="hwndOwner">Owner window the task Dialog will modal to.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IntPtr hwndOwner ) {
-      bool verificationFlagChecked;
-      int radioButtonResult;
-      return Show( hwndOwner, out verificationFlagChecked, out radioButtonResult );
-    }
-    */
-
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="owner">Owner window the task Dialog will modal to.</param>
-    /// <param name="verificationFlagChecked">Returns true if the verification checkbox was checked when the dialog
-    /// was dismissed.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IWin32Window owner, out bool verificationFlagChecked ) {
-      int radioButtonResult;
-      return Show(
-        ( owner == null ? IntPtr.Zero : owner.Handle ),
-        out verificationFlagChecked,
-        out radioButtonResult );
-    }
-    */
-
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="hwndOwner">Owner window the task Dialog will modal to.</param>
-    /// <param name="verificationFlagChecked">Returns true if the verification checkbox was checked when the dialog
-    /// was dismissed.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IntPtr hwndOwner, out bool verificationFlagChecked ) {
-      // We have to call a private version or PreSharp gets upset about a unsafe
-      // block in a public method. (PreSharp error 56505)
-      int radioButtonResult;
-      return PrivateShow( hwndOwner, out verificationFlagChecked, out radioButtonResult );
-    }
-    */
-
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="hwndOwner">Owner window the task Dialog will modal to.</param>
-    /// <param name="verificationFlagChecked">Returns true if the verification checkbox was checked when the dialog
-    /// was dismissed.</param>
-    /// <param name="radioButtonResult">The radio botton selected by the user.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IntPtr hwndOwner, out bool verificationFlagChecked, out int radioButtonResult ) {
-      // We have to call a private version or PreSharp gets upset about a unsafe
-      // block in a public method. (PreSharp error 56505)
-      return PrivateShow( hwndOwner, out verificationFlagChecked, out radioButtonResult );
-    }
-    */
-
     /// <summary>
     /// Create a TaskDialog from a TaskDialogConfig instance.
     /// </summary>
@@ -689,6 +331,63 @@ namespace TaskDialogNet.UserInterface {
     }
 
     /// <summary>
+    /// Special TaskDialog invocation method for NativeTaskDialogCommonDialog.
+    /// </summary>
+    /// <param name="hwndOwner">The window handle of the parent. (Overrides parent set in taskConfig)</param>
+    /// <param name="taskConfig">The task dialog configuration.</param>
+    /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
+    /// <returns></returns>
+    internal int Show( IntPtr hwndOwner, TaskDialogConfig taskConfig, out bool verificationFlagChecked ) {
+      verificationFlagChecked = false;
+      int button = -1;
+      int radioButtonResult = -1;
+      UnsafeNativeMethods.TASKDIALOGCONFIG config = new UnsafeNativeMethods.TASKDIALOGCONFIG();
+
+      try {
+        config = TranslateTaskDialogConfig( taskConfig, PrivateCallback );
+        config.hwndParent = hwndOwner;
+
+        // The call all this mucking about is here for.
+        UnsafeNativeMethods.TaskDialogIndirect(
+          ref config,
+          out button,
+          out radioButtonResult,
+          out verificationFlagChecked );
+
+      } finally {
+        // Free the unmanged memory needed for the button arrays.
+        // There is the possiblity of leaking memory if the app-domain is destroyed in a non clean way
+        // and the hosting OS process is kept alive but fixing this would require using hardening techniques
+        // that are not required for the users of this class.
+        if( config.pButtons != IntPtr.Zero ) {
+          int elementSize = Marshal.SizeOf( typeof( VistaTaskDialogButton ) );
+          for( int i = 0; i < config.cButtons; i++ ) {
+            unsafe {
+              byte* p = (byte*)config.pButtons;
+              Marshal.DestroyStructure( (IntPtr)( p + ( elementSize * i ) ), typeof( VistaTaskDialogButton ) );
+            }
+          }
+
+          Marshal.FreeHGlobal( config.pButtons );
+        }
+
+        if( config.pRadioButtons != IntPtr.Zero ) {
+          int elementSize = Marshal.SizeOf( typeof( VistaTaskDialogButton ) );
+          for( int i = 0; i < config.cRadioButtons; i++ ) {
+            unsafe {
+              byte* p = (byte*)config.pRadioButtons;
+              Marshal.DestroyStructure( (IntPtr)( p + ( elementSize * i ) ), typeof( VistaTaskDialogButton ) );
+            }
+          }
+
+          Marshal.FreeHGlobal( config.pRadioButtons );
+        }
+      }
+
+      return 0;
+    }
+
+    /// <summary>
     /// Reset the dialog to default values.
     /// This has no direct effect if the dialog is already running.
     /// </summary>
@@ -697,26 +396,6 @@ namespace TaskDialogNet.UserInterface {
     }
 
     #region Interface Methods
-    /// <summary>
-    /// Creates, displays, and operates a task dialog. The task dialog contains application-defined messages, title,
-    /// verification check box, command links and push buttons, plus any combination of predefined icons and push buttons
-    /// as specified on the other members of the class before calling Show.
-    /// </summary>
-    /// <param name="owner">Owner window the task Dialog will modal to.</param>
-    /// <param name="verificationFlagChecked">Returns true if the verification checkbox was checked when the dialog
-    /// was dismissed.</param>
-    /// <param name="radioButtonResult">The radio botton selected by the user.</param>
-    /// <returns>The result of the dialog, either a DialogResult value for common push buttons set in the CommonButtons
-    /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
-    /*
-    public int Show( IWin32Window owner, out bool verificationFlagChecked, out int radioButtonResult ) {
-      return Show(
-        ( owner == null ? IntPtr.Zero : owner.Handle ),
-        out verificationFlagChecked,
-        out radioButtonResult );
-    }
-    */
-
     /// <summary>
     /// Simulate the action of a button click in the TaskDialog. This can be a DialogResult value 
     /// or the ButtonID set on a TasDialogButton set on TaskDialog.Buttons.
@@ -1407,6 +1086,5 @@ namespace TaskDialogNet.UserInterface {
       return 0; // false;
     }
     #endregion
-
   }
 }

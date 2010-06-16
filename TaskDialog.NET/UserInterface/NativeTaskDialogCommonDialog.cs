@@ -93,11 +93,8 @@ namespace TaskDialogNet.UserInterface {
     /// user of this class must use the TaskDialogResult member to get more information.
     /// </returns>
     protected override bool RunDialog( IntPtr hwndOwner ) {
-      throw new NotImplementedException( "This feature is temporarily disabled." );
-      /*
-      _taskDialogResult = _taskDialog.Show( hwndOwner, out _verificationFlagCheckedResult );
+      _taskDialogResult = _taskDialog.Show( hwndOwner, TaskConfig, out _verificationFlagCheckedResult );
       return ( _taskDialogResult != (int) DialogResult.Cancel );
-      */
     }
   }
 }

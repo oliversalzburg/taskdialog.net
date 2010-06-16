@@ -22,65 +22,6 @@ namespace TaskDialogNet.UserInterface {
     public event TaskDialogEventHandler VerificationClicked;
     #endregion
 
-    #region Properties
-    /*
-    #region Flags
-    public bool EnableHyperlinks { get; set; }
-    public bool AllowDialogCancellation { get; set; }
-    public bool UseCommandLinks { get; set; }
-    public bool UseCommandLinksNoIcon { get; set; }
-    public bool ExpandFooterArea { get; set; }
-    public bool ExpandedByDefault { get; set; }
-    public bool VerificationFlagChecked { get; set; }
-    public bool ShowProgressBar { get; set; }
-    public bool ShowMarqueeProgressBar { get; set; }
-    public bool CallbackTimer { get; set; }
-    public bool PositionRelativeToWindow { get; set; }
-    public bool RtlLayout { get; set; }
-    public bool NoDefaultRadioButton { get; set; }
-    public bool CanBeMinimized { get; set; }
-    #endregion
-
-    public CommonButtons CommonButtons { get; set; }
-    
-    public string WindowTitle {
-      get { return Name; }
-      set { Name = value; }
-    }
-
-    public CommonIcon MainIcon { get; set; }
-    public Icon CustomMainIcon { get; set; }
-    public string MainInstruction { get; set; }
-    
-    public string Content {
-      get { return contentText.Text; }
-      set { contentText.Text = value; }
-    }
-
-    public List<TaskDialogButton> Buttons { get; set; }
-    public int DefaultButton { get; set; }
-    public List<TaskDialogButton> RadioButtons { get; set; }
-    public int DefaultRadioButton { get; set; }
-
-    public string VerificationText {
-      get { return verifyCheckBox.Text; }
-      set { verifyCheckBox.Text = value; }
-    }
-
-    public string ExpandedInformation {
-      get { return expandedInfoText.Text; }
-      set { expandedInfoText.Text = value; }
-    }
-
-    public string ExpandedControlText { get; set; }
-    public string CollapsedControlText { get; set; }
-    public CommonIcon FooterIcon { get; set; }
-    public Icon CustomFooterIcon { get; set; }
-    public string Footer { get; set; }
-    //public uint Width { get; set; }
-    */
-    #endregion
-
     #region Private properties
     /// <summary>
     /// The configuration of the TaskDialog.
@@ -142,20 +83,6 @@ namespace TaskDialogNet.UserInterface {
       ProgressBarState          = ProgressBarState.Normal;
       _verificationChecked      = TaskConfig.Flags.VerificationFlagChecked;
     }
-
-    /*
-    public int Show( IWin32Window owner, out bool verificationFlagChecked, out int radioButtonResult ) {
-      BuildForm();
-
-      StartTime = DateTime.Now;
-
-      ShowDialog();
-
-      verificationFlagChecked = _verificationChecked;
-      radioButtonResult       = _radioButtonClicked;
-      return _commandButtonClicked;
-    }
-    */
 
     /// <summary>
     /// Create a TaskDialog from a TaskDialogConfig instance.

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace TaskDialogNet.UserInterface {
 
@@ -30,48 +28,6 @@ namespace TaskDialogNet.UserInterface {
     }
   }
 
-  public class TaskDialogButton {
-    public int ButtonId { get; set; }
-    public string ButtonText { get; set; }
-  }
-
-  [Flags]
-  public enum CommonButtons {
-    None = 0x00,
-    Ok = 0x01,
-    Yes = 0x02,
-    No = 0x04,
-    Cancel = 0x08,
-    Retry = 0x10,
-    Close = 0x20
-  }
-
-  public enum CommonIcon {
-    None,
-    Information,
-    Warning,
-    Error,
-    SecurityWarning,
-    SecurityError,
-    SecuritySuccess,
-    SecurityShield,
-    SecurityShieldBlue,
-    SecurityShieldGray,
-    Custom
-  }
-
-  public enum ProgressBarStyle {
-    None,
-    Continous,
-    Marquee
-  }
-
-  public enum ProgressBarState {
-    Normal,
-    Pause,
-    Error
-  }
-
   public delegate void TaskDialogEventHandler( ITaskDialog sender, EventArgs args );
   public delegate void TaskDialogEventHandler<in T>( ITaskDialog sender, T args );
 
@@ -91,50 +47,6 @@ namespace TaskDialogNet.UserInterface {
     event TaskDialogEventHandler<TimerArgs> Timer;
     event TaskDialogEventHandler VerificationClicked;
     #endregion
-
-    /*
-    #region Properties
-    #region Flags
-    // Properties from dwFlags
-    // See: http://msdn.microsoft.com/en-us/library/bb787473%28VS.85%29.aspx
-    bool EnableHyperlinks { get; set; }
-    bool AllowDialogCancellation { get; set; }
-    bool UseCommandLinks { get; set; }
-    bool UseCommandLinksNoIcon { get; set; }
-    bool ExpandFooterArea { get; set; }
-    bool ExpandedByDefault { get; set; }
-    bool VerificationFlagChecked { get; set; }
-    bool ShowProgressBar { get; set; }
-    bool ShowMarqueeProgressBar { get; set; }
-    bool CallbackTimer { get; set; }
-    bool PositionRelativeToWindow { get; set; }
-    bool RtlLayout { get; set; }
-    bool NoDefaultRadioButton { get; set; }
-    bool CanBeMinimized { get; set; }
-    #endregion
-
-    // Additional properties from pTaskConfig
-    // See: http://msdn.microsoft.com/en-us/library/bb787473%28VS.85%29.aspx
-    CommonButtons CommonButtons { get; set; }
-    string WindowTitle { get; set; }
-    CommonIcon MainIcon { get; set; }
-    Icon CustomMainIcon { get; set; }
-    string MainInstruction { get; set; }
-    string Content { get; set; }
-    List<TaskDialogButton> Buttons { get; }
-    int DefaultButton { get; set; }
-    List<TaskDialogButton> RadioButtons { get; }
-    int DefaultRadioButton { get; set; }
-    string VerificationText { get; set; }
-    string ExpandedInformation { get; set; }
-    string ExpandedControlText { get; set; }
-    string CollapsedControlText { get; set; }
-    CommonIcon FooterIcon { get; set; }
-    Icon CustomFooterIcon { get; set; }
-    string Footer { get; set; }
-    int Width { get; set; }
-    #endregion
-    */
 
     #region Methods
     /// <summary>
