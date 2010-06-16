@@ -813,6 +813,8 @@ namespace TaskDialogNet.UserInterface {
         // Close button pressed?
         if( (int)button.Tag == 8 ) {
           DialogResult = DialogResult.Cancel;
+        } else {
+          DialogResult = (DialogResult)button.Tag;
         }
       }
     }
