@@ -256,6 +256,7 @@ namespace TaskDialogNet.UserInterface {
       MinimizeBox = TaskConfig.Flags.CanBeMinimized;
 
       if( !string.IsNullOrEmpty( TaskConfig.Footer ) ) {
+        footerText.Text = TaskConfig.Footer;
         if( TaskConfig.Flags.EnableHyperLinks ) {
           footerText.ConvertLinks();
         }
