@@ -213,6 +213,7 @@ namespace TaskDialogNet.UserInterface {
       taskDialog.VerificationClicked  += TaskDialogVerificationClicked;
       taskDialog.Help                 += TaskDialogHelp;
       taskDialog.ExpandoButtonClicked += TaskDialogExpandoButtonClicked;
+      taskDialog.Navigated            += TaskDialogNavigated;
 
       DialogResult dialogResult = DialogResult.None;
       int result = taskDialog.TaskDialogIndirect( TaskConfig, out ButtonResult, out RadioButtonResult, out VerificationChecked );
@@ -269,6 +270,10 @@ namespace TaskDialogNet.UserInterface {
 
     private static void TaskDialogExpandoButtonClicked( ITaskDialog sender, EventArgs e ) {
       InvokeExpandoButtonClicked( sender, EventArgs.Empty );
+    }
+
+    private static void TaskDialogNavigated( ITaskDialog sender, EventArgs args ) {
+      InvokeNavigated( sender, args );
     }
 
     //--------------------------------------------------------------------------------

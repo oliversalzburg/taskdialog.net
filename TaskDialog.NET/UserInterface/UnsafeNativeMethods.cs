@@ -163,11 +163,10 @@ namespace TaskDialogNet.UserInterface {
     /// TASKDIALOG_MESSAGES taken from CommCtrl.h.
     /// </summary>
     internal enum TASKDIALOG_MESSAGES : uint {
-      // Spec is not clear on what this is for.
-      ///// <summary>
-      ///// Navigate page.
-      ///// </summary>
-      ////TDM_NAVIGATE_PAGE = WM_USER + 101,
+      /// <summary>
+      /// Navigate page.
+      /// </summary>
+      TDM_NAVIGATE_PAGE = WM_USER + 101,
 
       /// <summary>
       /// Click button.

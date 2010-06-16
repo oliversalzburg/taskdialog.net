@@ -515,13 +515,20 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="page">The next page.</param>
     public void NavigatePage( TaskDialogConfig page ) {
-      throw new NotImplementedException( "Not yet implemented" );
       // TDM_NAVIGATE_PAGE = WM_USER+101, // wParam = TASKDIALOGCONFIG structure
-      ////    UnsafeNativeMethods.SendMessage(
-      ////        this.windowHandle,
-      ////        (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_NAVIGATE_PAGE,
-      ////        IntPtr.Zero,
-      ////        //a UnsafeNativeMethods.TASKDIALOGCONFIG value);
+      UnsafeNativeMethods.TASKDIALOGCONFIG config = TranslateTaskDialogConfig( page, PrivateCallback );
+      
+      int size = Marshal.SizeOf( config );
+      IntPtr p = Marshal.AllocHGlobal( size );
+      Marshal.StructureToPtr( config, p, false );
+
+      UnsafeNativeMethods.SendMessage(
+        WindowHandle,
+        (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_NAVIGATE_PAGE,
+        IntPtr.Zero,
+        p );
+
+      Marshal.DestroyStructure( p, typeof( UnsafeNativeMethods.TASKDIALOGCONFIG ) );
     }
 
     /// <summary>
