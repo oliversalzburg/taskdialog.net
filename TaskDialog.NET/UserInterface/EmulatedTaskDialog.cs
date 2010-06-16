@@ -358,7 +358,8 @@ namespace TaskDialogNet.UserInterface {
         formHeight += pnlContent.Height;
       }
 
-      bool showVerifyCheckbox = !string.IsNullOrEmpty( verifyCheckBox.Text );
+      verifyCheckBox.Text = TaskConfig.VerificationText;
+      bool showVerifyCheckbox = !string.IsNullOrEmpty( TaskConfig.VerificationText );
       verifyCheckBox.Visible = showVerifyCheckbox;
 
       // Setup Expanded Info and Buttons panels
