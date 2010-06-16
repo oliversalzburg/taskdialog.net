@@ -47,7 +47,7 @@ namespace TaskDialogNet.UserInterface {
     Error
   }
 
-  public class TaskDialogFlags {
+  public class TaskDialogFlags : ICloneable {
     /// <summary>
     /// Enables hyperlink processing for the strings specified in the Content, ExpandedInformation
     /// and FooterText members. When enabled, these members may be strings that contain hyperlinks
@@ -153,9 +153,20 @@ namespace TaskDialogNet.UserInterface {
       NoDefaultRadioButton      = false;
       CanBeMinimized            = false;
     }
+
+    /// <summary>
+    /// Creates a new object that is a copy of the current instance.
+    /// </summary>
+    /// <returns>
+    /// A new object that is a copy of this instance.
+    /// </returns>
+    /// <filterpriority>2</filterpriority>
+    public object Clone() {
+      return MemberwiseClone();
+    }
   }
 
-  public class TaskDialogConfig {
+  public class TaskDialogConfig : ICloneable {
     public IWin32Window Parent { get; set; }
     public TaskDialogFlags Flags { get; set; }
 
@@ -304,6 +315,17 @@ namespace TaskDialogNet.UserInterface {
       CustomFooterIcon          = null;
       Footer                    = null;
       Width                     = 0;
+    }
+
+    /// <summary>
+    /// Creates a new object that is a copy of the current instance.
+    /// </summary>
+    /// <returns>
+    /// A new object that is a copy of this instance.
+    /// </returns>
+    /// <filterpriority>2</filterpriority>
+    public object Clone() {
+      return MemberwiseClone();
     }
   }
 }

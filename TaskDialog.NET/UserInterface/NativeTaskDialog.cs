@@ -325,9 +325,8 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
     /// <returns></returns>
     public int TaskDialogIndirect( TaskDialogConfig taskConfig, out int button, out int radioButton, out bool verificationFlagChecked ) {
-      NativeTaskDialog taskDialog = new NativeTaskDialog();
-      taskDialog.TaskConfig = taskConfig;
-      return taskDialog.PrivateShow( out button, out radioButton, out verificationFlagChecked );
+      TaskConfig = taskConfig;
+      return PrivateShow( out button, out radioButton, out verificationFlagChecked );
     }
 
     /// <summary>
