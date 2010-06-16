@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -196,36 +197,43 @@ namespace TaskDialogNet.UserInterface {
         TaskConfig.CommonButtons = CommonButtons.Ok;
       }
 
+      if( ( TaskConfig.CommonButtons & CommonButtons.Ok ) > 0 ) {
+        Button button = new Button();
+        commonButtonPanel.Controls.Add( button );
+
+        button.Text = "&Ok";
+        button.Tag = DialogResult.OK;
+        _acceptButtonId = CommonButtons.Ok;
+      }
       if( ( TaskConfig.CommonButtons & CommonButtons.Yes ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
-        button.Text     = "&Yes";
-        button.Tag      = CommonButtons.Yes;
-        _acceptButtonId  = CommonButtons.Yes;
+        button.Text = "&Yes";
+        button.Tag = DialogResult.Yes;
+        _acceptButtonId = CommonButtons.Yes;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.No ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
-        button.Text     = "&No";
-        button.Tag      = CommonButtons.No;
-        _cancelButtonId  = CommonButtons.No;
+        button.Text = "&No";
+        button.Tag = DialogResult.No;
+        _cancelButtonId = CommonButtons.No;
       }
-      if( ( TaskConfig.CommonButtons & CommonButtons.Ok ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Retry ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
-        button.Text     = "&Ok";
-        button.Tag      = CommonButtons.Ok;
-        _acceptButtonId  = CommonButtons.Ok;
+        button.Text = "&Retry";
+        button.Tag = DialogResult.Retry;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Cancel ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
         button.Text     = "&Cancel";
-        button.Tag      = CommonButtons.Cancel;
+        button.Tag      = DialogResult.Cancel;
         _cancelButtonId  = CommonButtons.Cancel;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Close ) > 0 ) {
@@ -233,16 +241,10 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.Controls.Add( button );
 
         button.Text     = "C&lose";
-        button.Tag      = CommonButtons.Close;
+        button.Tag      = 8; // No equivalent in DialogResult enum
         _cancelButtonId  = CommonButtons.Close;
       }
-      if( ( TaskConfig.CommonButtons & CommonButtons.Retry ) > 0 ) {
-        Button button = new Button();
-        commonButtonPanel.Controls.Add( button );
-
-        button.Text = "&Retry";
-        button.Tag  = CommonButtons.Retry;
-      }
+      
       foreach( Button button in commonButtonPanel.Controls ) {
         button.UseVisualStyleBackColor = true;
         button.Click += CommonButtonClick;
@@ -806,8 +808,11 @@ namespace TaskDialogNet.UserInterface {
       if( button != null ) {
         ButtonClickedArgs buttonClickedArgs = new ButtonClickedArgs( (int)button.Tag );
         if( InvokeButtonClicked( this, buttonClickedArgs ) ) return;
-        
-        DialogResult = (DialogResult)button.Tag;
+
+        // Close button pressed?
+        if( (int)button.Tag == 8 ) {
+          DialogResult = DialogResult.Cancel;
+        }
       }
     }
 
