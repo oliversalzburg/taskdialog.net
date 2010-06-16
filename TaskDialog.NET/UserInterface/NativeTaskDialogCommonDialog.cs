@@ -35,7 +35,7 @@ namespace TaskDialogNet.UserInterface {
     private bool _verificationFlagCheckedResult;
 
     /// <summary>
-    /// TaskDialog wrapped in a CommonDialog class. THis is required to work well in
+    /// TaskDialog wrapped in a CommonDialog class. This is required to work well in
     /// MMC 2.1. In MMC 2.1 you must use the ShowDialog methods on the MMC classes to
     /// correctly show a modal dialog. This class will allow you to do this and keep access
     /// to the results of the TaskDialog.
@@ -73,6 +73,11 @@ namespace TaskDialogNet.UserInterface {
     }
 
     /// <summary>
+    /// The configuration for the TaskDialog.
+    /// </summary>
+    public TaskDialogConfig TaskConfig { get; set; }
+
+    /// <summary>
     /// Reset the common dialog.
     /// </summary>
     public override void Reset() {
@@ -88,8 +93,11 @@ namespace TaskDialogNet.UserInterface {
     /// user of this class must use the TaskDialogResult member to get more information.
     /// </returns>
     protected override bool RunDialog( IntPtr hwndOwner ) {
+      throw new NotImplementedException( "This feature is temporarily disabled." );
+      /*
       _taskDialogResult = _taskDialog.Show( hwndOwner, out _verificationFlagCheckedResult );
       return ( _taskDialogResult != (int) DialogResult.Cancel );
+      */
     }
   }
 }

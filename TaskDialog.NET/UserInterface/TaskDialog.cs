@@ -13,6 +13,7 @@ namespace TaskDialogNet.UserInterface {
     */
     public static bool ForceEmulationMode;
     public static bool VerificationChecked;
+    public static int ButtonResult = -1;
     public static int RadioButtonResult = -1;
     public static int CommandButtonResult = -1;
 
@@ -24,7 +25,7 @@ namespace TaskDialogNet.UserInterface {
     public static event TaskDialogEventHandler ExpandoButtonClicked;
     public static event TaskDialogEventHandler Help;
     public static event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
-    //public static event TaskDialogEventHandler Navigated;
+    public static event TaskDialogEventHandler Navigated;
     public static event TaskDialogEventHandler<ButtonClickedArgs> RadioButtonClicked;
     public static event TaskDialogEventHandler Timer;
     public static event TaskDialogEventHandler VerificationClicked;
@@ -64,12 +65,12 @@ namespace TaskDialogNet.UserInterface {
       TaskDialogEventHandler<HyperlinkClickedArgs> handler = HyperlinkClicked;
       if( handler != null ) handler( sender, e );
     }
-    /*
+    
     private static void InvokeNavigated( ITaskDialog sender, EventArgs e ) {
       TaskDialogEventHandler handler = Navigated;
       if( handler != null ) handler( sender, e );
     }
-    */
+    
     private static void InvokeRadioButtonClicked( ITaskDialog sender, ButtonClickedArgs e ) {
       TaskDialogEventHandler<ButtonClickedArgs> handler = RadioButtonClicked;
       if( handler != null ) handler( sender, e );
@@ -86,6 +87,27 @@ namespace TaskDialogNet.UserInterface {
     }
     #endregion
     #endregion
+
+    /// <summary>
+    /// Create a TaskDialog from a TaskDialogConfig instance.
+    /// </summary>
+    /// <param name="taskConfig">A TaskDialogConfig instance that describes the TaskDialog.</param>
+    /// <param name="button">The button that was clicked to close the TaskDialog.</param>
+    /// <param name="radioButton">The radio button that was selected in the TaskDialog.</param>
+    /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
+    /// <returns></returns>
+    public static int TaskDialogIndirect( TaskDialogConfig taskConfig, out int button, out int radioButton,
+                            out bool verificationFlagChecked ) {
+      ITaskDialog taskDialog;
+      if( NativeTaskDialog.IsAvailableOnThisOs && !ForceEmulationMode ) {
+        taskDialog = new NativeTaskDialog();
+
+      } else {
+        taskDialog = new EmulatedTaskDialog( false );
+      }
+
+      return taskDialog.TaskDialogIndirect( taskConfig, out button, out radioButton, out verificationFlagChecked );
+    }
 
     #region ShowTaskDialogBox
     public static DialogResult ShowTaskDialogBox( IWin32Window owner,
@@ -105,15 +127,18 @@ namespace TaskDialogNet.UserInterface {
       ITaskDialog taskDialog;
       if( NativeTaskDialog.IsAvailableOnThisOs && !ForceEmulationMode ) {
         taskDialog = new NativeTaskDialog();
+
       } else {
         taskDialog = new EmulatedTaskDialog( false );
       }
 
-      taskDialog.WindowTitle          = title;
-      taskDialog.MainInstruction      = mainInstruction;
-      taskDialog.Content              = content;
-      taskDialog.ExpandedInformation  = expandedInfo;
-      taskDialog.Footer               = footer;
+      TaskDialogConfig config = new TaskDialogConfig();
+      
+      config.WindowTitle          = title;
+      config.MainInstruction      = mainInstruction;
+      config.Content              = content;
+      config.ExpandedInformation  = expandedInfo;
+      config.Footer               = footer;
 
       // Radio Buttons
       if( !string.IsNullOrEmpty( radioButtons ) ) {
@@ -125,10 +150,10 @@ namespace TaskDialogNet.UserInterface {
             lst.Add( button );
           } catch( FormatException ) {}
         }
-        taskDialog.RadioButtons.AddRange( lst );
-        taskDialog.NoDefaultRadioButton = ( defaultIndex == -1 );
+        config.RadioButtons.AddRange( lst );
+        config.Flags.NoDefaultRadioButton = ( defaultIndex == -1 );
         if( defaultIndex >= 0 ) {
-          taskDialog.DefaultRadioButton = defaultIndex;
+          config.DefaultRadioButton = defaultIndex;
         }
       }
 
@@ -142,36 +167,36 @@ namespace TaskDialogNet.UserInterface {
             lst.Add( button );
           } catch( FormatException ) {}
         }
-        taskDialog.Buttons.AddRange( lst );
+        config.Buttons.AddRange( lst );
         if( defaultIndex >= 0 ) {
-          taskDialog.DefaultButton = defaultIndex;
+          config.DefaultButton = defaultIndex;
         }
       }
 
-      taskDialog.CommonButtons = buttons;
-      taskDialog.MainIcon = mainIcon;
-      if( taskDialog.MainIcon == CommonIcon.Custom ) throw new ArgumentException( "Not supported yet.", "mainIcon" );
-      taskDialog.FooterIcon = footerIcon;
-      if( taskDialog.FooterIcon == CommonIcon.Custom ) throw new ArgumentException( "Not supported yet.", "footerIcon" );
+      config.CommonButtons = buttons;
+      config.MainIcon = mainIcon;
+      if( config.MainIcon == CommonIcon.Custom ) throw new ArgumentException( "Not supported yet.", "mainIcon" );
+      config.FooterIcon = footerIcon;
+      if( config.FooterIcon == CommonIcon.Custom ) throw new ArgumentException( "Not supported yet.", "footerIcon" );
 
-      taskDialog.EnableHyperlinks         = true;
-      taskDialog.ShowProgressBar          = ( progressBarStyle == ProgressBarStyle.Continous ) ? true : false;
-      taskDialog.ShowMarqueeProgressBar   = ( progressBarStyle == ProgressBarStyle.Marquee ) ? true : false;
-      taskDialog.AllowDialogCancellation  = ( ( buttons & CommonButtons.Cancel ) >= 0 || 
+      config.Flags.EnableHyperLinks         = true;
+      config.Flags.ShowProgressBar          = ( progressBarStyle == ProgressBarStyle.Continous ) ? true : false;
+      config.Flags.ShowMarqueeProgressBar   = ( progressBarStyle == ProgressBarStyle.Marquee ) ? true : false;
+      config.Flags.AllowDialogCancellation  = ( ( buttons & CommonButtons.Cancel ) >= 0 || 
                                               ( buttons & CommonButtons.Close  ) >= 0 );
       
-      taskDialog.CallbackTimer            = true;
-      taskDialog.ExpandedByDefault        = false;
-      taskDialog.ExpandFooterArea         = false;
-      taskDialog.PositionRelativeToWindow = true;
-      taskDialog.RtlLayout                = false;
-      taskDialog.CanBeMinimized           = false;
-      taskDialog.UseCommandLinks          = ( taskDialog.Buttons.Count > 0 );
-      taskDialog.UseCommandLinksNoIcon    = false;
-      taskDialog.VerificationText         = verificationText;
-      taskDialog.VerificationFlagChecked  = false;
-      taskDialog.ExpandedControlText      = "Hide details";
-      taskDialog.CollapsedControlText     = "Show details";
+      config.Flags.CallbackTimer            = true;
+      config.Flags.ExpandedByDefault        = false;
+      config.Flags.ExpandFooterArea         = false;
+      config.Flags.PositionRelativeToWindow = true;
+      config.Flags.RtlLayout                = false;
+      config.Flags.CanBeMinimized           = false;
+      config.Flags.UseCommandLinks          = ( config.Buttons.Count > 0 );
+      config.Flags.UseCommandLinksNoIcon    = false;
+      config.VerificationText               = verificationText;
+      config.Flags.VerificationFlagChecked  = false;
+      config.ExpandedControlText            = "Hide details";
+      config.CollapsedControlText           = "Show details";
 
       taskDialog.Created              += TaskDialogCreated;
       taskDialog.ButtonClicked        += TaskDialogButtonClicked;
@@ -185,10 +210,10 @@ namespace TaskDialogNet.UserInterface {
       taskDialog.ExpandoButtonClicked += TaskDialogExpandoButtonClicked;
 
       DialogResult dialogResult = DialogResult.None;
-      int result = taskDialog.Show( taskDialog.CanBeMinimized ? null : owner, out VerificationChecked, out RadioButtonResult );
+      int result = taskDialog.TaskDialogIndirect( config, out ButtonResult, out RadioButtonResult, out VerificationChecked );
 
       // if a command button was clicked, then change return result
-      // to "DialogResult.OK" and set the CommandButtonResult
+      // to "DialogResult.OK" and set the CommandButtonResult)
       if( result >= 2000 ) {
         CommandButtonResult = result - 2000;
         dialogResult = DialogResult.OK;

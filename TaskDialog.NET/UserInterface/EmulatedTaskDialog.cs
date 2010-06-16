@@ -23,6 +23,7 @@ namespace TaskDialogNet.UserInterface {
     #endregion
 
     #region Properties
+    /*
     #region Flags
     public bool EnableHyperlinks { get; set; }
     public bool AllowDialogCancellation { get; set; }
@@ -77,9 +78,15 @@ namespace TaskDialogNet.UserInterface {
     public Icon CustomFooterIcon { get; set; }
     public string Footer { get; set; }
     //public uint Width { get; set; }
+    */
     #endregion
 
     #region Private properties
+    /// <summary>
+    /// The configuration of the TaskDialog.
+    /// </summary>
+    private TaskDialogConfig TaskConfig { get; set; }
+
     private bool IsExpanded { get; set; }
     private Control FocusControl { get; set; }
     private DateTime StartTime { get; set; }
@@ -125,48 +132,18 @@ namespace TaskDialogNet.UserInterface {
     /// Resets the Task Dialog to the state when first constructed, all properties set to their default value.
     /// </summary>
     private void Reset( ) {
-      EnableHyperlinks          = false;
-      AllowDialogCancellation   = false;
-      UseCommandLinks           = false;
-      UseCommandLinksNoIcon     = false;
-      ExpandFooterArea          = false;
-      ExpandedByDefault         = false;
-      VerificationFlagChecked   = false;
-      ShowProgressBar           = false;
-      ShowMarqueeProgressBar    = false;
-      CallbackTimer             = false;
-      PositionRelativeToWindow  = false;
-      RtlLayout                 = false;
-      NoDefaultRadioButton      = false;
-      CanBeMinimized            = false;
-
-      CommonButtons             = CommonButtons.None;
-      WindowTitle               = null;
-      MainIcon                  = CommonIcon.None;
-      CustomMainIcon            = null;
-      MainInstruction           = null;
-      Content                   = null;
-      Buttons                   = new List<TaskDialogButton>();
-      DefaultButton             = 0;
-      RadioButtons              = new List<TaskDialogButton>();
-      DefaultRadioButton        = 0;
-      VerificationText          = null;
-      ExpandedInformation       = null;
-      ExpandedControlText       = null;
-      CollapsedControlText      = null;
-      FooterIcon                = CommonIcon.None;
-      CustomFooterIcon          = null;
-      Footer                    = null;
+      TaskConfig                = new TaskDialogConfig();
       Width                     = 460;
 
-      IsExpanded                = ExpandedByDefault;
+      IsExpanded                = TaskConfig.Flags.ExpandedByDefault;
       FocusControl              = null;
       StartTime                 = DateTime.Now;
       ProgressBarSpeed          = 30;
       ProgressBarState          = ProgressBarState.Normal;
-      _verificationChecked      = VerificationFlagChecked;
+      _verificationChecked      = TaskConfig.Flags.VerificationFlagChecked;
     }
 
+    /*
     public int Show( IWin32Window owner, out bool verificationFlagChecked, out int radioButtonResult ) {
       BuildForm();
 
@@ -178,6 +155,7 @@ namespace TaskDialogNet.UserInterface {
       radioButtonResult       = _radioButtonClicked;
       return _commandButtonClicked;
     }
+    */
 
     /// <summary>
     /// Create a TaskDialog from a TaskDialogConfig instance.
@@ -188,7 +166,18 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="verificationFlagChecked">true if the verification checkbox was checked; false otherwise.</param>
     /// <returns></returns>
     public int TaskDialogIndirect( TaskDialogConfig taskConfig, out int button, out int radioButton, out bool verificationFlagChecked ) {
-      throw new NotImplementedException();
+      TaskConfig = taskConfig;
+
+      BuildForm();
+
+      StartTime = DateTime.Now;
+
+      ShowDialog();
+
+      verificationFlagChecked = _verificationChecked;
+      radioButton             = _radioButtonClicked;
+      button                  = _commandButtonClicked;
+      return 0;
     }
 
     #endregion
@@ -216,14 +205,14 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     private void BuildForm() {
       // Setup Content
-      if( !string.IsNullOrEmpty( Content ) ) {
+      if( !string.IsNullOrEmpty( TaskConfig.Content ) ) {
         contentText.ConvertLinks();
         contentText.ReadOnly  = true;
         contentText.BackColor = BackColor;
       }
 
       // Setup Expanded Info and Buttons panels
-      if( !string.IsNullOrEmpty( ExpandedInformation ) ) {
+      if( !string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) ) {
         expandedInfoText.ConvertLinks();
         expandedInfoText.ReadOnly   = true;
         expandedInfoText.BackColor  = BackColor;
@@ -233,13 +222,13 @@ namespace TaskDialogNet.UserInterface {
       progressBar.Maximum = 100;
 
       // Setup RadioButtons
-      if( RadioButtons.Count > 0 ) {
-        foreach( TaskDialogButton t in RadioButtons ) {
+      if( TaskConfig.RadioButtons.Count > 0 ) {
+        foreach( TaskDialogButton t in TaskConfig.RadioButtons ) {
           RadioButton radioButton = new RadioButton {
             Parent  = pnlRadioButtons,
             Text    = t.ButtonText,
             Tag     = t.ButtonId,
-            Checked = ( DefaultRadioButton == t.ButtonId )
+            Checked = ( TaskConfig.DefaultRadioButton == t.ButtonId )
           };
 
           if( radioButton.Checked ) RadioButtonClick( radioButton, EventArgs.Empty );
@@ -249,10 +238,10 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup CommandButtons
-      if( Buttons.Count >= 0 ) {
-        foreach( TaskDialogButton button in Buttons ) {
+      if( TaskConfig.Buttons.Count >= 0 ) {
+        foreach( TaskDialogButton button in TaskConfig.Buttons ) {
           Control commandButton;
-          if( UseCommandLinks ) {
+          if( TaskConfig.Flags.UseCommandLinks ) {
             commandButton = new CommandButton { Parent = pnlCommandButtons };
           } else {
             commandButton = new Button { Parent = commonButtonPanel };
@@ -266,18 +255,18 @@ namespace TaskDialogNet.UserInterface {
           commandButton.Text  = button.ButtonText;
           commandButton.Tag   = button.ButtonId;
           commandButton.Click += CommandButton_Click;
-          if( button.ButtonId == DefaultButton ) {
+          if( button.ButtonId == TaskConfig.DefaultButton ) {
             FocusControl = commandButton;
           }
         }
       }
 
       // Setup common buttons
-      if( CommonButtons == CommonButtons.None ) {
-        CommonButtons = CommonButtons.Ok;
+      if( TaskConfig.CommonButtons == CommonButtons.None ) {
+        TaskConfig.CommonButtons = CommonButtons.Ok;
       }
 
-      if( ( CommonButtons & CommonButtons.Yes ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Yes ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -285,7 +274,7 @@ namespace TaskDialogNet.UserInterface {
         button.Tag      = CommonButtons.Yes;
         _acceptButtonId  = CommonButtons.Yes;
       }
-      if( ( CommonButtons & CommonButtons.No ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.No ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -293,7 +282,7 @@ namespace TaskDialogNet.UserInterface {
         button.Tag      = CommonButtons.No;
         _cancelButtonId  = CommonButtons.No;
       }
-      if( ( CommonButtons & CommonButtons.Ok ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Ok ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -301,7 +290,7 @@ namespace TaskDialogNet.UserInterface {
         button.Tag      = CommonButtons.Ok;
         _acceptButtonId  = CommonButtons.Ok;
       }
-      if( ( CommonButtons & CommonButtons.Cancel ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Cancel ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -309,7 +298,7 @@ namespace TaskDialogNet.UserInterface {
         button.Tag      = CommonButtons.Cancel;
         _cancelButtonId  = CommonButtons.Cancel;
       }
-      if( ( CommonButtons & CommonButtons.Close ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Close ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -317,7 +306,7 @@ namespace TaskDialogNet.UserInterface {
         button.Tag      = CommonButtons.Close;
         _cancelButtonId  = CommonButtons.Close;
       }
-      if( ( CommonButtons & CommonButtons.Retry ) > 0 ) {
+      if( ( TaskConfig.CommonButtons & CommonButtons.Retry ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
@@ -329,13 +318,13 @@ namespace TaskDialogNet.UserInterface {
         button.Click += CommonButtonClick;
       }
 
-      ControlBox = ( ( CommonButtons & CommonButtons.Cancel ) > 0 ||
-                     ( CommonButtons & CommonButtons.Close  ) > 0 );
+      ControlBox = ( ( TaskConfig.CommonButtons & CommonButtons.Cancel ) > 0 ||
+                     ( TaskConfig.CommonButtons & CommonButtons.Close  ) > 0 );
       
-      MinimizeBox = CanBeMinimized;
+      MinimizeBox = TaskConfig.Flags.CanBeMinimized;
 
-      if( !string.IsNullOrEmpty( Footer ) ) {
-        if( EnableHyperlinks ) {
+      if( !string.IsNullOrEmpty( TaskConfig.Footer ) ) {
+        if( TaskConfig.Flags.EnableHyperLinks ) {
           footerText.ConvertLinks();
         }
         footerText.ReadOnly = true;
@@ -357,7 +346,7 @@ namespace TaskDialogNet.UserInterface {
       int mainInstructionMinSize = 41;
 
       // Setup Main Instruction
-      switch( MainIcon ) {
+      switch( TaskConfig.MainIcon ) {
         case CommonIcon.Information:
           imgMain.Image = SystemIcons.Information.ToBitmap();
           contentText.Top = 0;
@@ -429,8 +418,8 @@ namespace TaskDialogNet.UserInterface {
       formHeight += pnlMainInstruction.Height;
 
       // Setup Content
-      pnlContent.Visible = !string.IsNullOrEmpty( Content );
-      if( !string.IsNullOrEmpty( Content ) ) {
+      pnlContent.Visible = !string.IsNullOrEmpty( TaskConfig.Content );
+      if( !string.IsNullOrEmpty( TaskConfig.Content ) ) {
         AdjustLabelHeight( contentText );
         pnlContent.Height = contentText.Height + 4;
         formHeight += pnlContent.Height;
@@ -440,7 +429,7 @@ namespace TaskDialogNet.UserInterface {
       verifyCheckBox.Visible = showVerifyCheckbox;
 
       // Setup Expanded Info and Buttons panels
-      if( string.IsNullOrEmpty( ExpandedInformation ) ) {
+      if( string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) ) {
         pnlExpandedInfo.Visible = false;
         showHideDetails.Visible = false;
         verifyCheckBox.Top = 12;
@@ -450,7 +439,7 @@ namespace TaskDialogNet.UserInterface {
         AdjustLabelHeight( expandedInfoText );
         pnlExpandedInfo.Height        = expandedInfoText.Height + 4;
         pnlExpandedInfo.Visible       = IsExpanded;
-        showHideDetails.Text        = ( IsExpanded ? String.Format( "        {0}", ExpandedControlText ) : String.Format( "        {0}", CollapsedControlText ) );
+        showHideDetails.Text        = ( IsExpanded ? String.Format( "        {0}", TaskConfig.ExpandedControlText ) : String.Format( "        {0}", TaskConfig.CollapsedControlText ) );
         showHideDetails.ImageIndex  = ( IsExpanded ? 0 : 3 );
         if( !showVerifyCheckbox ) {
           pnlButtons.Height = 40;
@@ -461,15 +450,15 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup progress bar
-      progressBarPanel.Visible = ( ShowProgressBar || ShowMarqueeProgressBar );
-      if( ShowProgressBar || ShowMarqueeProgressBar ) {
+      progressBarPanel.Visible = ( TaskConfig.Flags.ShowProgressBar || TaskConfig.Flags.ShowMarqueeProgressBar );
+      if( TaskConfig.Flags.ShowProgressBar || TaskConfig.Flags.ShowMarqueeProgressBar ) {
         progressBar.Width = expandedInfoText.Width;
         formHeight += progressBarPanel.Height;
       }
 
       // Setup RadioButtons
-      pnlRadioButtons.Visible = ( RadioButtons.Count > 0 );
-      if( RadioButtons.Count > 0 ) {
+      pnlRadioButtons.Visible = ( TaskConfig.RadioButtons.Count > 0 );
+      if( TaskConfig.RadioButtons.Count > 0 ) {
         int pnlHeight = 12;
         int lastHeight = 0;
         foreach( RadioButton radioButton in pnlRadioButtons.Controls.OfType<RadioButton>().OrderBy( r => r.Tag ) ) {
@@ -483,8 +472,8 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup CommandButtons
-      pnlCommandButtons.Visible = ( Buttons.Count >= 0 );
-      if( Buttons.Count >= 0 ) {
+      pnlCommandButtons.Visible = ( TaskConfig.Buttons.Count >= 0 );
+      if( TaskConfig.Buttons.Count >= 0 ) {
         int t = 8;
         int pnlHeight = 16;
         foreach( CommandButton commandButton in pnlCommandButtons.Controls.OfType<CommandButton>().OrderBy( b => b.Tag ) ) {
@@ -518,9 +507,9 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Adjust common buttons again
-      int leftMost = Math.Max( ( !string.IsNullOrEmpty( ExpandedInformation ) ) ? showHideDetails.Right : 0, ( showVerifyCheckbox ) ? verifyCheckBox.Right : 0 );
+      int leftMost = Math.Max( ( !string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) ) ? showHideDetails.Right : 0, ( showVerifyCheckbox ) ? verifyCheckBox.Right : 0 );
       
-      if( UseCommandLinks ) {
+      if( TaskConfig.Flags.UseCommandLinks ) {
         commonButtonPanel.MaximumSize = new Size( commonButtonPanel.Right - leftMost + 3, 0 );
 
       } else {
@@ -528,7 +517,7 @@ namespace TaskDialogNet.UserInterface {
       }
       commonButtonPanel.Left = Width - commonButtonPanel.Width - 8;
 
-      if( !showVerifyCheckbox && string.IsNullOrEmpty( ExpandedInformation ) && CommonButtons == CommonButtons.None ) {
+      if( !showVerifyCheckbox && string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) && TaskConfig.CommonButtons == CommonButtons.None ) {
         pnlButtons.Visible = false;
 
       } else {
@@ -536,11 +525,11 @@ namespace TaskDialogNet.UserInterface {
         formHeight += pnlButtons.Height;
       }
 
-      pnlFooter.Visible = !string.IsNullOrEmpty( Footer );
-      if( !string.IsNullOrEmpty( Footer ) ) {
+      pnlFooter.Visible = !string.IsNullOrEmpty( TaskConfig.Footer );
+      if( !string.IsNullOrEmpty( TaskConfig.Footer ) ) {
         AdjustLabelHeight( footerText );
         pnlFooter.Height = Math.Max( 28, footerText.Height + 16 );
-        switch( FooterIcon ) {
+        switch( TaskConfig.FooterIcon ) {
           case CommonIcon.Information:
             imgFooter.Image = ResizeBitmap( SystemIcons.Information.ToBitmap(), 16, 16 );
             break;
@@ -711,7 +700,7 @@ namespace TaskDialogNet.UserInterface {
     /// Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard. 
     /// </summary>
     /// <param name="page">The next page.</param>
-    public void NavigatePage( ITaskDialog page ) {
+    public void NavigatePage( TaskDialogConfig page ) {
       throw new NotImplementedException();
     }
 
@@ -740,7 +729,7 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="text">The new value.</param>
     public void SetExpandedInformationText( string text ) {
-      if( string.IsNullOrEmpty( ExpandedInformation ) ) return;
+      if( string.IsNullOrEmpty( TaskConfig.ExpandedInformation ) ) return;
       expandedInfoText.Text = text;
       expandedInfoText.ConvertLinks();
       ReCalculateLayout();
@@ -761,7 +750,7 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="text">The new value.</param>
     public void SetMainInstructionText( string text ) {
-      MainInstruction = text;
+      TaskConfig.MainInstruction = text;
       pnlMainInstruction.Refresh();
       ReCalculateLayout();
     }
@@ -772,8 +761,8 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="setMarquee">Specifies whether the progress bar sbould be shown in Marquee mode.
     /// A value of true turns on Marquee mode.</param>
     public void SetMarqueeProgressBar( bool setMarquee ) {
-      ShowMarqueeProgressBar  = setMarquee;
-      ShowProgressBar         = !setMarquee;
+      TaskConfig.Flags.ShowMarqueeProgressBar  = setMarquee;
+      TaskConfig.Flags.ShowProgressBar         = !setMarquee;
       progressBar.Style       = ( setMarquee ) ? System.Windows.Forms.ProgressBarStyle.Marquee : System.Windows.Forms.ProgressBarStyle.Continuous;
     }
 
@@ -943,7 +932,7 @@ namespace TaskDialogNet.UserInterface {
     private void LbDetailsClick( object sender, EventArgs e ) {
       IsExpanded = !IsExpanded;
       pnlExpandedInfo.Visible = IsExpanded;
-      showHideDetails.Text = ( IsExpanded ? String.Format( "        {0}", ExpandedControlText ) : String.Format( "        {0}", CollapsedControlText ) );
+      showHideDetails.Text = ( IsExpanded ? String.Format( "        {0}", TaskConfig.ExpandedControlText ) : String.Format( "        {0}", TaskConfig.CollapsedControlText ) );
       if( IsExpanded )
         Height += pnlExpandedInfo.Height;
       else
@@ -959,7 +948,7 @@ namespace TaskDialogNet.UserInterface {
       SizeF mzSize = new SizeF(
         pnlMainInstruction.Width - MainInstructionLeftMargin - MainInstructionRightMargin, 5000.0F );
       Graphics g = Graphics.FromHwnd( Handle );
-      SizeF textSize = g.MeasureString( MainInstruction, _mainInstructionFont, mzSize );
+      SizeF textSize = g.MeasureString( TaskConfig.MainInstruction, _mainInstructionFont, mzSize );
       _mainInstructionHeight = (int) textSize.Height;
       return textSize;
     }
@@ -968,7 +957,7 @@ namespace TaskDialogNet.UserInterface {
       SizeF szL = GetMainInstructionTextSizeF();
       e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
       e.Graphics.DrawString(
-        MainInstruction,
+        TaskConfig.MainInstruction,
         _mainInstructionFont,
         new SolidBrush( _mainInstructionColor ),
         new RectangleF( new PointF( MainInstructionLeftMargin, 10 ), szL ) );
@@ -977,7 +966,7 @@ namespace TaskDialogNet.UserInterface {
     //--------------------------------------------------------------------------------
 
     private void FrmTaskDialogShown( object sender, EventArgs e ) {
-      switch( MainIcon ) {
+      switch( TaskConfig.MainIcon ) {
         case CommonIcon.Error:
           System.Media.SystemSounds.Hand.Play();
           break;
@@ -1018,7 +1007,7 @@ namespace TaskDialogNet.UserInterface {
         // The close button has the same button id as the Yes common button.
         // Kinda weird, but that's how it seems to be.
         ButtonClickedArgs buttonClickedArgs = new ButtonClickedArgs( 2 );
-        if( !AllowDialogCancellation || InvokeButtonClicked( this, buttonClickedArgs ) ) e.Cancel = true;
+        if( !TaskConfig.Flags.AllowDialogCancellation || InvokeButtonClicked( this, buttonClickedArgs ) ) e.Cancel = true;
         DialogResult = (DialogResult)_cancelButtonId;
       }
     }

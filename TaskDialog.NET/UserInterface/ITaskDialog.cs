@@ -92,6 +92,7 @@ namespace TaskDialogNet.UserInterface {
     event TaskDialogEventHandler VerificationClicked;
     #endregion
 
+    /*
     #region Properties
     #region Flags
     // Properties from dwFlags
@@ -133,11 +134,9 @@ namespace TaskDialogNet.UserInterface {
     string Footer { get; set; }
     int Width { get; set; }
     #endregion
-
+    */
 
     #region Methods
-    int Show( IWin32Window owner, out bool verificationFlagChecked, out int radioButtonResult );
-
     /// <summary>
     /// Create a TaskDialog from a TaskDialogConfig instance.
     /// </summary>
@@ -222,7 +221,7 @@ namespace TaskDialogNet.UserInterface {
     /// Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard. 
     /// </summary>
     /// <param name="page">The next page.</param>
-    void NavigatePage( ITaskDialog page );
+    void NavigatePage( TaskDialogConfig page );
 
     /// <summary>
     /// Designate whether a given Task Dialog button or command link should have a User Account Control (UAC) shield icon.
