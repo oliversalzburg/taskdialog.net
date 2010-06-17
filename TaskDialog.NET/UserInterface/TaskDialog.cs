@@ -276,9 +276,7 @@ namespace TaskDialogNet.UserInterface {
       InvokeNavigated( sender, args );
     }
 
-    //--------------------------------------------------------------------------------
     // Overloaded versions...
-    //--------------------------------------------------------------------------------
     public static DialogResult ShowTaskDialogBox( IWin32Window owner,
                                                   string title,
                                                   string mainInstruction,
@@ -311,14 +309,10 @@ namespace TaskDialogNet.UserInterface {
       return ShowTaskDialogBox( null, title, mainInstruction, content, expandedInfo, footer, verificationText,
                                 radioButtons, commandButtons, buttons, mainIcon, footerIcon, 0, progressBarStyle );
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
 
     #region MessageBox
-
-    //--------------------------------------------------------------------------------
     public static DialogResult MessageBox( IWin32Window owner,
                                            string title,
                                            string mainInstruction,
@@ -334,9 +328,7 @@ namespace TaskDialogNet.UserInterface {
                                 buttons, mainIcon, footerIcon, progressBarStyle );
     }
 
-    //--------------------------------------------------------------------------------
     // Overloaded versions...
-    //--------------------------------------------------------------------------------
     public static DialogResult MessageBox( string title,
                                            string mainInstruction,
                                            string content,
@@ -369,16 +361,9 @@ namespace TaskDialogNet.UserInterface {
                                            ProgressBarStyle progressBarStyle ) {
       return MessageBox( null, title, mainInstruction, content, "", "", "", buttons, mainIcon, CommonIcon.Information, progressBarStyle );
     }
-
-    //--------------------------------------------------------------------------------
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
     #region ShowRadioBox
-
-    //--------------------------------------------------------------------------------
     public static int ShowRadioBox( IWin32Window owner,
                                     string title,
                                     string mainInstruction,
@@ -400,9 +385,7 @@ namespace TaskDialogNet.UserInterface {
       return -1;
     }
 
-    //--------------------------------------------------------------------------------
     // Overloaded versions...
-    //--------------------------------------------------------------------------------
     public static int ShowRadioBox( string title,
                                     string mainInstruction,
                                     string content,
@@ -463,14 +446,9 @@ namespace TaskDialogNet.UserInterface {
       return ShowRadioBox( null, title, mainInstruction, content, "", "", "", radioButtons, CommonIcon.None,
                            CommonIcon.Information, 0 );
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
     #region ShowCommandBox
-
-    //--------------------------------------------------------------------------------
     public static int ShowCommandBox( IWin32Window owner,
                                       string title,
                                       string mainInstruction,
@@ -494,9 +472,7 @@ namespace TaskDialogNet.UserInterface {
       return -1;
     }
 
-    //--------------------------------------------------------------------------------
     // Overloaded versions...
-    //--------------------------------------------------------------------------------
     public static int ShowCommandBox( string title,
                                       string mainInstruction,
                                       string content,
@@ -530,9 +506,6 @@ namespace TaskDialogNet.UserInterface {
       return ShowCommandBox( null, title, mainInstruction, content, "", "", "", commandButtons, showCancelButton,
                              CommonIcon.None, CommonIcon.Information, progressBarStyle );
     }
-
     #endregion
-
-    //--------------------------------------------------------------------------------
   }
 }

@@ -486,7 +486,6 @@ namespace TaskDialogNet.UserInterface {
       ClientSize = new Size( ClientSize.Width, formHeight );
     }
 
-    //--------------------------------------------------------------------------------
     private static Image ResizeBitmap( Image srcImg, int newWidth, int newHeight ) {
       float percentWidth = ( newWidth / (float) srcImg.Width );
       float percentHeight = ( newHeight / (float) srcImg.Height );
@@ -504,8 +503,7 @@ namespace TaskDialogNet.UserInterface {
       return b;
     }
 
-    //--------------------------------------------------------------------------------
-    // utility function for setting a Label's height
+    // Utility function for setting a Label's height
     private static void AdjustLabelHeight( Control lb ) {
       string text = lb.Text;
       Font textFont = lb.Font;
@@ -837,7 +835,6 @@ namespace TaskDialogNet.UserInterface {
       if( RadioButtonClicked != null ) RadioButtonClicked( sender, e );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnShown( EventArgs e ) {
       if( !_formBuilt )
         throw new Exception( "EmulatedTaskDialog : Please call .BuildForm() before showing the TaskDialog" );
@@ -845,27 +842,22 @@ namespace TaskDialogNet.UserInterface {
       focusButton.Select();
     }
 
-    //--------------------------------------------------------------------------------
     private void LbDetailsMouseEnter( object sender, EventArgs e ) {
       showHideDetails.ImageIndex = ( IsExpanded ? 1 : 4 );
     }
 
-    //--------------------------------------------------------------------------------
     private void LbDetailsMouseLeave( object sender, EventArgs e ) {
       showHideDetails.ImageIndex = ( IsExpanded ? 0 : 3 );
     }
 
-    //--------------------------------------------------------------------------------
     private void LbDetailsMouseUp( object sender, MouseEventArgs e ) {
       showHideDetails.ImageIndex = ( IsExpanded ? 1 : 4 );
     }
 
-    //--------------------------------------------------------------------------------
     private void LbDetailsMouseDown( object sender, MouseEventArgs e ) {
       showHideDetails.ImageIndex = ( IsExpanded ? 2 : 5 );
     }
 
-    //--------------------------------------------------------------------------------
     private void LbDetailsClick( object sender, EventArgs e ) {
       IsExpanded = !IsExpanded;
       pnlExpandedInfo.Visible = IsExpanded;
@@ -877,7 +869,6 @@ namespace TaskDialogNet.UserInterface {
       if( null != ExpandoButtonClicked ) ExpandoButtonClicked( this, new ExpandoButtonClickedArgs( IsExpanded ) );
     }
 
-    //--------------------------------------------------------------------------------
     private const int MainInstructionLeftMargin = 46;
     private const int MainInstructionRightMargin = 8;
 
@@ -900,7 +891,6 @@ namespace TaskDialogNet.UserInterface {
         new RectangleF( new PointF( MainInstructionLeftMargin, 10 ), szL ) );
     }
 
-    //--------------------------------------------------------------------------------
 
     private void FrmTaskDialogShown( object sender, EventArgs e ) {
       switch( TaskConfig.MainIcon ) {
@@ -985,7 +975,5 @@ namespace TaskDialogNet.UserInterface {
     private void FooterLinkClicked( object sender, LinkClickedEventArgs e ) {
       if( null != HyperlinkClicked ) HyperlinkClicked( this, new HyperlinkClickedArgs( footerText.GetUrlForLinkText( e.LinkText ) ) );
     }
-
-    //--------------------------------------------------------------------------------
   }
 }

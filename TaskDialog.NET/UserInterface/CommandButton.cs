@@ -6,11 +6,7 @@ using System.Windows.Forms;
 
 namespace TaskDialogNet.UserInterface {
   public partial class CommandButton : Button {
-    //--------------------------------------------------------------------------------
-
-    #region PRIVATE MEMBERS
-
-    //--------------------------------------------------------------------------------
+    #region Private Members
     private Image ImgArrow1 { get; set; }
     private Image ImgArrow2 { get; set; }
 
@@ -25,14 +21,9 @@ namespace TaskDialogNet.UserInterface {
     }
 
     private ButtonState _state = ButtonState.Normal;
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    #region PUBLIC PROPERTIES
-
-    //--------------------------------------------------------------------------------
+    #region Public Properties
     // Override this to make sure the control is invalidated (repainted) when 'Text' is changed
     public override string Text {
       get { return base.Text; }
@@ -60,38 +51,23 @@ namespace TaskDialogNet.UserInterface {
         if( _autoHeight ) Invalidate();
       }
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    #region CONSTRUCTOR
-
-    //--------------------------------------------------------------------------------
+    #region Constructor
     public CommandButton() {
       InitializeComponent();
       base.Font = new Font( "Arial", 11.75F, FontStyle.Regular, GraphicsUnit.Point, 0 );
       SmallFont = new Font( "Arial", 8F, FontStyle.Regular, GraphicsUnit.Point, 0 );
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    #region PUBLIC ROUTINES
-
-    //--------------------------------------------------------------------------------
+    #region Public Methods
     public int GetBestHeight() {
       return ( TopMargin * 2 ) + (int) GetSmallTextSizeF().Height + (int) GetLargeTextSizeF().Height;
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    #region PRIVATE ROUTINES
-
-    //--------------------------------------------------------------------------------
+    #region Private Methods
     private string GetLargeText() {
       string[] lines = Text.Split( new[] {'\n'} );
       return lines[ 0 ];
@@ -126,21 +102,15 @@ namespace TaskDialogNet.UserInterface {
       SizeF     textSize  = g.MeasureString( s, SmallFont, mzSize );
       return textSize;
     }
-
     #endregion
 
-    //--------------------------------------------------------------------------------
-
-    #region OVERRIDEs
-
-    //--------------------------------------------------------------------------------
+    #region Overrides
     protected override void OnCreateControl() {
       base.OnCreateControl();
       ImgArrow1 = Resources.green_arrow1;
       ImgArrow2 = Resources.green_arrow2;
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnPaint( PaintEventArgs e ) {
       e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
       e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
@@ -203,35 +173,30 @@ namespace TaskDialogNet.UserInterface {
       e.Graphics.DrawImage( img, new Point( LeftMargin, TopMargin + (int) ( szL.Height / 2 ) - img.Height / 2 ) );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnMouseLeave( EventArgs e ) {
       _state = ButtonState.Normal;
       Invalidate();
       base.OnMouseLeave( e );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnMouseEnter( EventArgs e ) {
       _state = ButtonState.MouseOver;
       Invalidate();
       base.OnMouseEnter( e );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnMouseUp( MouseEventArgs e ) {
       _state = ButtonState.MouseOver;
       Invalidate();
       base.OnMouseUp( e );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnMouseDown( MouseEventArgs e ) {
       _state = ButtonState.Down;
       Invalidate();
       base.OnMouseDown( e );
     }
 
-    //--------------------------------------------------------------------------------
     protected override void OnSizeChanged( EventArgs e ) {
       if( _autoHeight ) {
         int h = GetBestHeight();
@@ -242,9 +207,6 @@ namespace TaskDialogNet.UserInterface {
       }
       base.OnSizeChanged( e );
     }
-
     #endregion
-
-    //--------------------------------------------------------------------------------
   }
 }
