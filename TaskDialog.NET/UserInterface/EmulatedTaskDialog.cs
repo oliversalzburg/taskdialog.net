@@ -448,7 +448,7 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.MaximumSize = new Size( commonButtonPanel.Right - leftMost + 3, 0 );
 
       } else {
-        Width = commonButtonPanel.Width + leftMost + commonButtonPanel.Margin.Right * 4 + 4;
+        Width = Math.Max( Width, commonButtonPanel.Width + leftMost + commonButtonPanel.Margin.Right * 4 + 4 );
       }
       commonButtonPanel.Left = Width - commonButtonPanel.Width - 8;
 
