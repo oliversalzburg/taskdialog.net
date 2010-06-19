@@ -264,6 +264,9 @@ namespace TaskDialogNet.UserInterface {
         footerText.BackColor = pnlFooter.BackColor;
       }
 
+      // Set up timer
+      callbackTimer.Enabled = TaskConfig.Flags.CallbackTimer;
+
       ReCalculateLayout();
 
       _formBuilt = true;
@@ -912,7 +915,11 @@ namespace TaskDialogNet.UserInterface {
     }
 
     private void CallbackTimerTick( object sender, EventArgs e ) {
-      if( null != Timer ) Timer( this, new TimerArgs( (uint)DateTime.Now.Subtract( StartTime ).TotalMilliseconds ) );
+      if( null != Timer ) {
+        TimerArgs args = new TimerArgs( (uint)DateTime.Now.Subtract( StartTime ).TotalMilliseconds );
+        Timer( this, args );
+        if( args.Reset ) StartTime = DateTime.Now;
+      }
     }
 
     private void TaskDialogForm_FormClosed( object sender, FormClosedEventArgs e ) {

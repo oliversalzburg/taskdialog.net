@@ -30,6 +30,7 @@ namespace TaskDialogNet.UserInterface {
 
   public class TimerArgs : EventArgs {
     public uint TickCount { get; private set; }
+    public bool Reset { get; set; }
 
     public TimerArgs( uint tickCount ) {
       TickCount = tickCount;

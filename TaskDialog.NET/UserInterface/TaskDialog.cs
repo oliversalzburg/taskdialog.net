@@ -32,7 +32,7 @@ namespace TaskDialogNet.UserInterface {
     public static event TaskDialogEventHandler<HyperlinkClickedArgs> HyperlinkClicked;
     public static event TaskDialogEventHandler Navigated;
     public static event TaskDialogEventHandler<ButtonClickedArgs> RadioButtonClicked;
-    public static event TaskDialogEventHandler Timer;
+    public static event TaskDialogEventHandler<TimerArgs> Timer;
     public static event TaskDialogEventHandler VerificationClicked;
     
     #region Event Invoker
@@ -81,8 +81,8 @@ namespace TaskDialogNet.UserInterface {
       if( handler != null ) handler( sender, e );
     }
 
-    private static void InvokeTimer( ITaskDialog sender, EventArgs e ) {
-      TaskDialogEventHandler handler = Timer;
+    private static void InvokeTimer( ITaskDialog sender, TimerArgs e ) {
+      TaskDialogEventHandler<TimerArgs> handler = Timer;
       if( handler != null ) handler( sender, e );
     }
 
@@ -158,7 +158,9 @@ namespace TaskDialogNet.UserInterface {
         TaskConfig.RadioButtons.AddRange( lst );
         TaskConfig.Flags.NoDefaultRadioButton = ( defaultIndex == -1 );
         if( defaultIndex >= 0 ) {
-          TaskConfig.DefaultRadioButton = defaultIndex;
+          TaskConfig.DefaultRadioButton = defaultIndex + 1000;
+        } else {
+          TaskConfig.DefaultRadioButton = 1000;
         }
       }
 
@@ -244,7 +246,7 @@ namespace TaskDialogNet.UserInterface {
       InvokeHyperlinkClicked( sender, e as HyperlinkClickedArgs );
     }
 
-    private static void TaskDialogTimer( ITaskDialog sender, EventArgs e ) {
+    private static void TaskDialogTimer( ITaskDialog sender, TimerArgs e ) {
       InvokeTimer( sender, e );
     }
 

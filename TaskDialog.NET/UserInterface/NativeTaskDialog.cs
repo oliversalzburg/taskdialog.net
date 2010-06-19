@@ -1058,7 +1058,11 @@ namespace TaskDialogNet.UserInterface {
           break;
 
         case VistaTaskDialogNotification.Timer:
-          if( null != Timer ) Timer( this, new TimerArgs( args.TimerTickCount ) );
+          if( null != Timer ) {
+            TimerArgs timerArgs = new TimerArgs( args.TimerTickCount );
+            Timer( this, timerArgs );
+            if( timerArgs.Reset ) return 1;
+          }
           break;
 
         case VistaTaskDialogNotification.Destroyed:
