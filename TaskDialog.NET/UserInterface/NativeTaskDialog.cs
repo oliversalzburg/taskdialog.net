@@ -948,7 +948,7 @@ namespace TaskDialogNet.UserInterface {
     /// member or the ButtonID from a TaskDialogButton structure set on the Buttons member.</returns>
     private int PrivateShow( out int button, out int radioButtonResult, out bool verificationFlagChecked ) {
       verificationFlagChecked = false;
-      radioButtonResult = 0;
+      radioButtonResult       = 0;
       UnsafeNativeMethods.TASKDIALOGCONFIG config = new UnsafeNativeMethods.TASKDIALOGCONFIG();
 
       try {

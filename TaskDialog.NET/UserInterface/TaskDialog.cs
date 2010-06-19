@@ -139,6 +139,7 @@ namespace TaskDialogNet.UserInterface {
 
       TaskConfig = new TaskDialogConfig();
 
+      TaskConfig.Parent               = owner;
       TaskConfig.WindowTitle          = title;
       TaskConfig.MainInstruction      = mainInstruction;
       TaskConfig.Content              = content;

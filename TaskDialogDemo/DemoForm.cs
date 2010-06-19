@@ -31,7 +31,7 @@ namespace TaskDialogDemo {
       TaskDialog.Timer                += TaskDialog_Timer;
 
       TaskDialog.ForceEmulationMode = forceEmulationCheckBox.Checked;
-      DialogResult result = TaskDialog.ShowTaskDialogBox(
+      DialogResult result = TaskDialog.ShowTaskDialogBox( this,
         "title",
         "mainInstruction",
         "content",
