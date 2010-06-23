@@ -312,6 +312,11 @@ namespace TaskDialogNet.UserInterface {
     /// Reference that is passed to the callback.
     /// </summary>
     private object CallbackData { get; set; }
+
+    /// <summary>
+    /// Storage for old configurations when navigating pages.
+    /// </summary>
+    private List<UnsafeNativeMethods.TASKDIALOGCONFIG> OldConfigurations { get; set; }
     #endregion
  
 
@@ -518,6 +523,8 @@ namespace TaskDialogNet.UserInterface {
       // TDM_NAVIGATE_PAGE = WM_USER+101, // wParam = TASKDIALOGCONFIG structure
       UnsafeNativeMethods.TASKDIALOGCONFIG config = TranslateTaskDialogConfig( page, PrivateCallback );
       
+      OldConfigurations.Add( config );
+
       int size = Marshal.SizeOf( config );
       IntPtr p = Marshal.AllocHGlobal( size );
       Marshal.StructureToPtr( config, p, false );
@@ -954,6 +961,10 @@ namespace TaskDialogNet.UserInterface {
       try {
         config = TranslateTaskDialogConfig( TaskConfig, PrivateCallback );
         
+        // Store old configurations to avoid callback delegates being garbage collected after
+        // navigating to another page.
+        OldConfigurations = new List< UnsafeNativeMethods.TASKDIALOGCONFIG > { config };
+
         // The call all this mucking about is here for.
         UnsafeNativeMethods.TaskDialogIndirect(
           ref config,
@@ -1067,6 +1078,7 @@ namespace TaskDialogNet.UserInterface {
 
         case VistaTaskDialogNotification.Destroyed:
           if( null != Destroyed ) Destroyed( this, EventArgs.Empty );
+          OldConfigurations.Clear();
           break;
 
         case VistaTaskDialogNotification.RadioButtonClicked:

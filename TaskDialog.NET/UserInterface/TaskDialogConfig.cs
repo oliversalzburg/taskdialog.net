@@ -19,7 +19,7 @@ namespace TaskDialogNet.UserInterface {
     Cancel = 0x08,
     Retry = 0x10,
     Close = 0x20
-  }
+  } 
 
   public enum CommonIcon {
     None,
