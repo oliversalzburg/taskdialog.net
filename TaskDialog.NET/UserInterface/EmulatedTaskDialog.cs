@@ -168,7 +168,7 @@ namespace TaskDialogNet.UserInterface {
 
       // Setup CommandButtons
       commandButtonsPanel.Controls.Clear();
-      if( TaskConfig.Buttons.Count >= 0 ) {
+      if( TaskConfig.Buttons.Count > 0 ) {
         foreach( TaskDialogButton button in TaskConfig.Buttons ) {
           Control commandButton;
           if( TaskConfig.Flags.UseCommandLinks ) {
@@ -188,6 +188,10 @@ namespace TaskDialogNet.UserInterface {
           if( button.ButtonId == TaskConfig.DefaultButton ) {
             FocusControl = commandButton;
           }
+        }
+        if( 0 == TaskConfig.DefaultButton ) {
+          FocusControl = commandButtonsPanel.Controls.OfType<CommandButton>().ToArray()[ 0 ];
+          commandButtonsPanel.Controls.OfType<CommandButton>().ToArray()[ 0 ].Focus();
         }
       }
 
@@ -842,7 +846,9 @@ namespace TaskDialogNet.UserInterface {
       if( !_formBuilt )
         throw new Exception( "EmulatedTaskDialog : Please call .BuildForm() before showing the TaskDialog" );
       base.OnShown( e );
-      focusButton.Select();
+      
+      if( null != FocusControl ) FocusControl.Select();
+      else focusButton.Select();
     }
 
     private void LbDetailsMouseEnter( object sender, EventArgs e ) {
