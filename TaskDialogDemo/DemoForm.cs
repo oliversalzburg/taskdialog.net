@@ -32,7 +32,7 @@ namespace TaskDialogDemo {
 
       TaskDialog.ForceEmulationMode = forceEmulationCheckBox.Checked;
       DialogResult result = TaskDialog.ShowTaskDialogBox( this,
-        "title",
+        "TaskDialog.Net Demo",
         "mainInstruction",
         "content",
         "Do you require additional information regarding this matter?",
@@ -79,6 +79,7 @@ namespace TaskDialogDemo {
 
     void TaskDialog_Help( ITaskDialog sender, EventArgs args ) {
       Console.WriteLine( "Help invoked (F1 pressed)." );
+      sender.ClickButton( 2000 );
     }
 
     void TaskDialog_ExpandoButtonClicked( ITaskDialog sender, ExpandoButtonClickedArgs args ) {

@@ -286,7 +286,7 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="wParam">Specifies additional message-specific information.</param>
     /// <param name="lParam">Specifies additional message-specific information.</param>
     /// <returns>The return value specifies the result of the message processing; it depends on the message sent.</returns>
-    [DllImport( "user32.dll" )]
+    [DllImport( "user32.dll", SetLastError = true )]
     internal static extern IntPtr SendMessage( IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam );
 
     /// <summary>

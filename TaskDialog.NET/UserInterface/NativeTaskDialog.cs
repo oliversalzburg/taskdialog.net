@@ -407,15 +407,11 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="buttonId">Indicates the button ID to be clicked.</param>
     public void ClickButton( int buttonId ) {
       // TDM_CLICK_BUTTON                    = WM_USER+102, // wParam = Button ID
-      bool success = UnsafeNativeMethods.SendMessage(
+      UnsafeNativeMethods.SendMessage(
         WindowHandle,
         (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_CLICK_BUTTON,
         (IntPtr)buttonId,
-        IntPtr.Zero ) != IntPtr.Zero;
-      if( !success ) {
-        int lastWin32Error = Marshal.GetLastWin32Error();
-        throw new Win32Exception( lastWin32Error, "SendMessage for TDM_CLICK_BUTTON failed." );
-      }
+        IntPtr.Zero );
     }
 
     /// <summary>
