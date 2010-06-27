@@ -191,7 +191,6 @@ namespace TaskDialogNet.UserInterface {
         }
         if( 0 == TaskConfig.DefaultButton ) {
           FocusControl = commandButtonsPanel.Controls.OfType<CommandButton>().ToArray()[ 0 ];
-          commandButtonsPanel.Controls.OfType<CommandButton>().ToArray()[ 0 ].Focus();
         }
       }
 
