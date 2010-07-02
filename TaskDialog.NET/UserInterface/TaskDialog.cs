@@ -115,7 +115,7 @@ namespace TaskDialogNet.UserInterface {
     }
 
     #region ShowTaskDialogBox
-    public static DialogResult ShowTaskDialogBox( IWin32Window owner,
+    public static DialogResult ShowTaskDialogBox( IntPtr owner,
                                                   string title,
                                                   string mainInstruction,
                                                   string content,
@@ -280,7 +280,7 @@ namespace TaskDialogNet.UserInterface {
     }
 
     // Overloaded versions...
-    public static DialogResult ShowTaskDialogBox( IWin32Window owner,
+    public static DialogResult ShowTaskDialogBox( IntPtr owner,
                                                   string title,
                                                   string mainInstruction,
                                                   string content,
@@ -309,14 +309,14 @@ namespace TaskDialogNet.UserInterface {
                                                   CommonIcon mainIcon,
                                                   CommonIcon footerIcon,
                                                   ProgressBarStyle progressBarStyle ) {
-      return ShowTaskDialogBox( null, title, mainInstruction, content, expandedInfo, footer, verificationText,
+      return ShowTaskDialogBox( IntPtr.Zero, title, mainInstruction, content, expandedInfo, footer, verificationText,
                                 radioButtons, commandButtons, buttons, mainIcon, footerIcon, 0, progressBarStyle );
     }
     #endregion
 
 
     #region MessageBox
-    public static DialogResult MessageBox( IWin32Window owner,
+    public static DialogResult MessageBox( IntPtr owner,
                                            string title,
                                            string mainInstruction,
                                            string content,
@@ -342,11 +342,11 @@ namespace TaskDialogNet.UserInterface {
                                            CommonIcon mainIcon,
                                            CommonIcon footerIcon,
                                            ProgressBarStyle progressBarStyle ) {
-      return ShowTaskDialogBox( null, title, mainInstruction, content, expandedInfo, footer, verificationText, "", "",
+      return ShowTaskDialogBox( IntPtr.Zero, title, mainInstruction, content, expandedInfo, footer, verificationText, "", "",
                                 buttons, mainIcon, footerIcon, progressBarStyle );
     }
 
-    public static DialogResult MessageBox( IWin32Window owner,
+    public static DialogResult MessageBox( IntPtr owner,
                                            string title,
                                            string mainInstruction,
                                            string content,
@@ -362,12 +362,12 @@ namespace TaskDialogNet.UserInterface {
                                            CommonButtons buttons,
                                            CommonIcon mainIcon,
                                            ProgressBarStyle progressBarStyle ) {
-      return MessageBox( null, title, mainInstruction, content, "", "", "", buttons, mainIcon, CommonIcon.Information, progressBarStyle );
+      return MessageBox( IntPtr.Zero, title, mainInstruction, content, "", "", "", buttons, mainIcon, CommonIcon.Information, progressBarStyle );
     }
     #endregion
 
     #region ShowRadioBox
-    public static int ShowRadioBox( IWin32Window owner,
+    public static int ShowRadioBox( IntPtr owner,
                                     string title,
                                     string mainInstruction,
                                     string content,
@@ -399,7 +399,7 @@ namespace TaskDialogNet.UserInterface {
                                     CommonIcon mainIcon,
                                     CommonIcon footerIcon,
                                     int defaultIndex ) {
-      DialogResult res = ShowTaskDialogBox( null, title, mainInstruction, content, expandedInfo, footer,
+      DialogResult res = ShowTaskDialogBox( IntPtr.Zero, title, mainInstruction, content, expandedInfo, footer,
                                             verificationText,
                                             radioButtons, "", CommonButtons.Ok | CommonButtons.Cancel, mainIcon, footerIcon,
                                             defaultIndex, ProgressBarStyle.None );
@@ -409,7 +409,7 @@ namespace TaskDialogNet.UserInterface {
       return -1;
     }
 
-    public static int ShowRadioBox( IWin32Window owner,
+    public static int ShowRadioBox( IntPtr owner,
                                     string title,
                                     string mainInstruction,
                                     string content,
@@ -423,7 +423,7 @@ namespace TaskDialogNet.UserInterface {
                            CommonIcon.None, CommonIcon.Information, 0 );
     }
 
-    public static int ShowRadioBox( IWin32Window owner,
+    public static int ShowRadioBox( IntPtr owner,
                                     string title,
                                     string mainInstruction,
                                     string content,
@@ -433,7 +433,7 @@ namespace TaskDialogNet.UserInterface {
                            CommonIcon.Information, defaultIndex );
     }
 
-    public static int ShowRadioBox( IWin32Window owner,
+    public static int ShowRadioBox( IntPtr owner,
                                     string title,
                                     string mainInstruction,
                                     string content,
@@ -446,13 +446,13 @@ namespace TaskDialogNet.UserInterface {
                                     string mainInstruction,
                                     string content,
                                     string radioButtons ) {
-      return ShowRadioBox( null, title, mainInstruction, content, "", "", "", radioButtons, CommonIcon.None,
+      return ShowRadioBox( IntPtr.Zero, title, mainInstruction, content, "", "", "", radioButtons, CommonIcon.None,
                            CommonIcon.Information, 0 );
     }
     #endregion
 
     #region ShowCommandBox
-    public static int ShowCommandBox( IWin32Window owner,
+    public static int ShowCommandBox( IntPtr owner,
                                       string title,
                                       string mainInstruction,
                                       string content,
@@ -487,7 +487,7 @@ namespace TaskDialogNet.UserInterface {
                                       CommonIcon mainIcon,
                                       CommonIcon footerIcon,
                                       ProgressBarStyle progressBarStyle ) {
-      DialogResult res = ShowTaskDialogBox( null, title, mainInstruction, content, expandedInfo, footer,
+      DialogResult res = ShowTaskDialogBox( IntPtr.Zero, title, mainInstruction, content, expandedInfo, footer,
                                             verificationText,
                                             "", commandButtons,
                                             ( showCancelButton ? CommonButtons.Cancel : CommonButtons.None ),
@@ -498,7 +498,7 @@ namespace TaskDialogNet.UserInterface {
       return -1;
     }
 
-    public static int ShowCommandBox( IWin32Window owner, string title, string mainInstruction, string content,
+    public static int ShowCommandBox( IntPtr owner, string title, string mainInstruction, string content,
                                       string commandButtons, bool showCancelButton, ProgressBarStyle progressBarStyle ) {
       return ShowCommandBox( owner, title, mainInstruction, content, "", "", "", commandButtons, showCancelButton,
                              CommonIcon.None, CommonIcon.Information, progressBarStyle );
@@ -506,7 +506,7 @@ namespace TaskDialogNet.UserInterface {
 
     public static int ShowCommandBox( string title, string mainInstruction, string content, string commandButtons,
                                       bool showCancelButton, ProgressBarStyle progressBarStyle ) {
-      return ShowCommandBox( null, title, mainInstruction, content, "", "", "", commandButtons, showCancelButton,
+      return ShowCommandBox( IntPtr.Zero, title, mainInstruction, content, "", "", "", commandButtons, showCancelButton,
                              CommonIcon.None, CommonIcon.Information, progressBarStyle );
     }
     #endregion

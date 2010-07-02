@@ -167,7 +167,7 @@ namespace TaskDialogNet.UserInterface {
   }
 
   public class TaskDialogConfig : ICloneable {
-    public IWin32Window Parent { get; set; }
+    public IntPtr Parent { get; set; }
     public TaskDialogFlags Flags { get; set; }
 
     /// <summary>
@@ -295,7 +295,7 @@ namespace TaskDialogNet.UserInterface {
     public int Width { get; set; }
 
     public TaskDialogConfig() {
-      Parent                    = null;
+      Parent                    = IntPtr.Zero;
       Flags                     = new TaskDialogFlags();
       CommonButtons             = CommonButtons.None;
       WindowTitle               = null;

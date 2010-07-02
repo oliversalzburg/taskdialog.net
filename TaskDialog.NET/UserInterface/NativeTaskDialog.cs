@@ -803,7 +803,7 @@ namespace TaskDialogNet.UserInterface {
     private static UnsafeNativeMethods.TASKDIALOGCONFIG TranslateTaskDialogConfig( TaskDialogConfig config, UnsafeNativeMethods.NativeTaskDialogCallback callback ) {
       UnsafeNativeMethods.TASKDIALOGCONFIG result = new UnsafeNativeMethods.TASKDIALOGCONFIG();
       result.cbSize           = (uint)Marshal.SizeOf( typeof( UnsafeNativeMethods.TASKDIALOGCONFIG ) );
-      result.hwndParent       = ( config.Parent != null ) ? config.Parent.Handle : (IntPtr)0;
+      result.hwndParent       = config.Parent;
       result.dwFlags          = TranslateFlags( config.Flags );
       result.dwCommonButtons  = TranslateCommonButtons( config.CommonButtons );
 
