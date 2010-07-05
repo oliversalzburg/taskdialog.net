@@ -132,6 +132,11 @@ namespace TaskDialogNet.UserInterface {
     /// Create all controls needed for the current settings.
     /// </summary>
     private void BuildForm() {
+      if( InvokeRequired ) {
+        EndInvoke( BeginInvoke( new MethodInvoker( BuildForm ) ) );
+        return;
+      }
+
       // Setup Content
       if( !string.IsNullOrEmpty( TaskConfig.Content ) ) {
         contentText.ConvertLinks();
@@ -720,7 +725,9 @@ namespace TaskDialogNet.UserInterface {
     /// <returns>Returns the previous value if successful, or zero otherwise.</returns>
     public int SetProgressBarPosition( int position ) {
       int oldValue = progressBar.Value;
-      progressBar.Value = position;
+      if( position > progressBar.Minimum && progressBar.Maximum > position ) {
+        progressBar.Value = position;
+      }
       return oldValue;
     }
 
