@@ -221,6 +221,15 @@ namespace TaskDialogNet.UserInterface {
       DialogResult dialogResult = DialogResult.None;
       int result = taskDialog.TaskDialogIndirect( TaskConfig, out ButtonResult, out RadioButtonResult, out VerificationChecked );
 
+      // Try to interpret the ButtonResult as a DialogResult
+      try {
+        if( ButtonResult < 1000 ) {
+          dialogResult = (DialogResult)ButtonResult;
+        }
+// ReSharper disable EmptyGeneralCatchClause
+      } catch {}
+// ReSharper restore EmptyGeneralCatchClause
+
       // if a command button was clicked, then change return result
       // to "DialogResult.OK" and set the CommandButtonResult)
       if( result >= 2000 ) {
