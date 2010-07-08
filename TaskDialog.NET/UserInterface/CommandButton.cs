@@ -9,6 +9,7 @@ namespace TaskDialogNet.UserInterface {
     #region Private Members
     private Image ImgArrow1 { get; set; }
     private Image ImgArrow2 { get; set; }
+    private Image Shield    { get; set; }
 
     private const int LeftMargin  = 10;
     private const int TopMargin   = 10;
@@ -49,6 +50,15 @@ namespace TaskDialogNet.UserInterface {
       set {
         _autoHeight = value;
         if( _autoHeight ) Invalidate();
+      }
+    }
+
+    private bool _requiresElevation;
+    public bool RequiresElevation {
+      get { return _requiresElevation; }
+      set {
+        _requiresElevation = value; 
+        Refresh();
       }
     }
     #endregion
@@ -109,6 +119,7 @@ namespace TaskDialogNet.UserInterface {
       base.OnCreateControl();
       ImgArrow1 = Resources.green_arrow1;
       ImgArrow2 = Resources.green_arrow2;
+      Shield    = Resources.shieldSmall;
     }
 
     protected override void OnPaint( PaintEventArgs e ) {
@@ -153,6 +164,8 @@ namespace TaskDialogNet.UserInterface {
         e.Graphics.DrawRectangle( new Pen( Color.DarkGray, 1 ), newRect );
         textColor = Color.DarkBlue;
       }
+
+      if( RequiresElevation ) img = Shield;
 
       string largetext = GetLargeText();
       string smalltext = GetSmallText();

@@ -652,7 +652,22 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="requiresElevation">False to designate that the action invoked by the button does not require elevation;
     /// true to designate that the action does require elevation.</param>
     public void SetButtonElevationRequiredState( int buttonId, bool requiresElevation ) {
-      throw new NotImplementedException();
+      IEnumerable<CommandButton> commandButtons = commandButtonsPanel.Controls.OfType<CommandButton>().Where( c => (int)c.Tag == buttonId );
+      if( commandButtons.Count() == 1 ) {
+        commandButtons.First().RequiresElevation = requiresElevation;
+        return;
+      }
+
+      IEnumerable<Button> buttons = commonButtonPanel.Controls.OfType<Button>().Where( b => (int)b.Tag == buttonId );
+      if( buttons.Count() == 1 ) {
+        buttons.First().Image = ( requiresElevation ) ? Resources.shieldSmall : null;
+        buttons.First().TextImageRelation = TextImageRelation.ImageBeforeText;
+        return;
+      }
+
+      // If we reach this point, no proper button could be found.
+      // But the specs state, that the return value of this emulated message is to be ignored.
+      // So we do nothing.
     }
 
     /// <summary>

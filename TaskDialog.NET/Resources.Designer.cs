@@ -70,5 +70,12 @@ namespace TaskDialogNet {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        internal static System.Drawing.Bitmap shieldSmall {
+          get {
+            object obj = ResourceManager.GetObject( "shieldSmall", resourceCulture );
+            return ( (System.Drawing.Bitmap)( obj ) );
+          }
+        }
     }
 }
