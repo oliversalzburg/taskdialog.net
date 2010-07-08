@@ -490,7 +490,7 @@ namespace TaskDialogNet.UserInterface {
         WindowHandle,
         (uint)UnsafeNativeMethods.TASKDIALOG_MESSAGES.TDM_ENABLE_RADIO_BUTTON,
         (IntPtr)buttonId,
-        (IntPtr)( enable ? 0 : 1 ) );
+        (IntPtr)( enable ? 1 : 0 ) );
     }
 
     /// <summary>
