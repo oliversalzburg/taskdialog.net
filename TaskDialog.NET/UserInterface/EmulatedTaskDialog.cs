@@ -80,7 +80,7 @@ namespace TaskDialogNet.UserInterface {
       IsExpanded                = TaskConfig.Flags.ExpandedByDefault;
       FocusControl              = null;
       StartTime                 = DateTime.Now;
-      ProgressBarSpeed          = 30;
+      ProgressBarSpeed          = int.MaxValue;
       ProgressBarState          = ProgressBarState.Normal;
       _verificationChecked      = TaskConfig.Flags.VerificationFlagChecked;
     }
@@ -719,7 +719,8 @@ namespace TaskDialogNet.UserInterface {
     public void SetMarqueeProgressBar( bool setMarquee ) {
       TaskConfig.Flags.ShowMarqueeProgressBar  = setMarquee;
       TaskConfig.Flags.ShowProgressBar         = !setMarquee;
-      progressBar.Style       = ( setMarquee ) ? System.Windows.Forms.ProgressBarStyle.Marquee : System.Windows.Forms.ProgressBarStyle.Continuous;
+      progressBar.Style = ( setMarquee ) ? System.Windows.Forms.ProgressBarStyle.Marquee : System.Windows.Forms.ProgressBarStyle.Continuous;
+      if( setMarquee ) progressBar.MarqueeAnimationSpeed = ProgressBarSpeed;
     }
 
     /// <summary>
