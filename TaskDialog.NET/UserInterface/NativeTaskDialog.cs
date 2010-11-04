@@ -668,6 +668,7 @@ namespace TaskDialogNet.UserInterface {
     /// Sets the state of the progress bar.
     /// </summary>
     /// <param name="state">The state to set the progress bar.</param>
+    /// <exception cref="Win32Exception">SendMessage for TDM_SET_PROGRESS_BAR_STATE failed.</exception>
     public void SetProgressBarState( ProgressBarState state ) {
       VistaProgressBarState newState = VistaProgressBarState.Normal;
       if( state == ProgressBarState.Error ) {
@@ -900,6 +901,7 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="icon">The CommonIcon to translate.</param>
     /// <returns>An integer describing the same icon for TaskDialogIndirect.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><c>icon</c> is out of range.</exception>
     private static IntPtr TranslateIcon( CommonIcon icon ) {
       switch( icon ) {
         case CommonIcon.None:
@@ -1010,6 +1012,7 @@ namespace TaskDialogNet.UserInterface {
     /// <param name="lparam">Specifies additional noitification information.  The contents of this parameter depends on the value of the msg parameter.</param>
     /// <param name="refData">Specifies the application-defined value given in the call to TaskDialogIndirect.</param>
     /// <returns>A HRESULT. It's not clear in the spec what a failed result will do.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><c></c> is out of range.</exception>
     private int PrivateCallback(
       [In] IntPtr hwnd,
       [In] uint msg,
