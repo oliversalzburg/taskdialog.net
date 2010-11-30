@@ -85,11 +85,11 @@ namespace TaskDialogNet.UserInterface {
 
     private string GetSmallText() {
       if( Text.IndexOf( '\n' ) < 0 )
-        return "";
+        return string.Empty;
 
       string s = Text;
       string[] lines = s.Split( new[] {'\n'} );
-      s = "";
+      s = string.Empty;
       for( int i = 1; i < lines.Length; i++ )
         s += lines[ i ] + "\n";
       return s.Trim( new[] {'\n'} );
@@ -105,7 +105,7 @@ namespace TaskDialogNet.UserInterface {
 
     private SizeF GetSmallTextSizeF() {
       string s = GetSmallText();
-      if( s == "" ) return new SizeF( 0, 0 );
+      if( s == string.Empty ) return new SizeF( 0, 0 );
       const int x         = LeftMargin + ArrowWidth + 8;
       SizeF     mzSize    = new SizeF( Width - x - LeftMargin, 5000.0F ); // presume RIGHT_MARGIN = LEFT_MARGIN
       Graphics  g         = Graphics.FromHwnd( Handle );
@@ -176,7 +176,7 @@ namespace TaskDialogNet.UserInterface {
                              new Rectangle( LeftMargin + ImgArrow1.Width + 5, TopMargin, (int) szL.Width,
                                             (int) szL.Height ), textColor, TextFormatFlags.Default );
 
-      if( smalltext != "" ) {
+      if( smalltext != string.Empty ) {
         SizeF szS = GetSmallTextSizeF();
         e.Graphics.DrawString( smalltext, SmallFont, new SolidBrush( textColor ),
                                new RectangleF(

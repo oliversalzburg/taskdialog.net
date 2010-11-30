@@ -41,6 +41,7 @@ namespace TaskDialogNet.UserInterface {
     /// to the results of the TaskDialog.
     /// </summary>
     /// <param name="taskDialog">The TaskDialog to show.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="taskDialog" /> is <c>null</c>.</exception>
     public NativeTaskDialogCommonDialog( NativeTaskDialog taskDialog ) {
       if( taskDialog == null ) {
         throw new ArgumentNullException( "taskDialog" );

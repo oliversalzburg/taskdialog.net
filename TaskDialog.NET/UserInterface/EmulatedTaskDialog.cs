@@ -285,6 +285,7 @@ namespace TaskDialogNet.UserInterface {
     /// <summary>
     /// Recalculates the layout of all elements in the dialog.
     /// </summary>
+    /// <exception cref="ArgumentException"></exception>
     private void ReCalculateLayout() {
       int formHeight = 0;
       int mainInstructionMinSize = 41;
@@ -761,6 +762,7 @@ namespace TaskDialogNet.UserInterface {
     /// Sets the state of the progress bar.
     /// </summary>
     /// <param name="state">The state to set the progress bar.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><c>state</c> is out of range.</exception>
     public void SetProgressBarState( ProgressBarState state ) {
       switch( state ) {
         case ProgressBarState.Normal:
@@ -790,6 +792,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">The icon to set.</param>
+    /// <exception cref="NotImplementedException"><c>NotImplementedException</c>.</exception>
     public void UpdateMainIcon( CommonIcon icon ) {
       throw new NotImplementedException();
     }
@@ -799,6 +802,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">The icon to set.</param>
+    /// <exception cref="NotImplementedException"><c>NotImplementedException</c>.</exception>
     public void UpdateMainIcon( Icon icon ) {
       throw new NotImplementedException();
     }
@@ -808,6 +812,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
+    /// <exception cref="NotImplementedException"><c>NotImplementedException</c>.</exception>
     public void UpdateFooterIcon( CommonIcon icon ) {
       throw new NotImplementedException();
     }
@@ -817,6 +822,7 @@ namespace TaskDialogNet.UserInterface {
     /// custom via Icon type) must be used when upating the icon.
     /// </summary>
     /// <param name="icon">Task Dialog standard icon.</param>
+    /// <exception cref="NotImplementedException"><c>NotImplementedException</c>.</exception>
     public void UpdateFooterIcon( Icon icon ) {
       throw new NotImplementedException();
     }
@@ -864,6 +870,7 @@ namespace TaskDialogNet.UserInterface {
       if( RadioButtonClicked != null ) RadioButtonClicked( sender, e );
     }
 
+    /// <exception cref="Exception">EmulatedTaskDialog : Please call .BuildForm() before showing the TaskDialog</exception>
     protected override void OnShown( EventArgs e ) {
       if( !_formBuilt )
         throw new Exception( "EmulatedTaskDialog : Please call .BuildForm() before showing the TaskDialog" );
