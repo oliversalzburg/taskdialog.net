@@ -138,6 +138,7 @@ namespace TaskDialogNet.UserInterface {
       }
 
       // Setup Content
+      contentText.Text = TaskConfig.Content;
       if( !string.IsNullOrEmpty( TaskConfig.Content ) ) {
         contentText.ConvertLinks();
         contentText.ReadOnly  = true;
@@ -210,7 +211,7 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.Controls.Add( button );
 
         button.Text = "&Ok";
-        button.Tag = DialogResult.OK;
+        button.Tag = (int)DialogResult.OK;
         _acceptButtonId = CommonButtons.Ok;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Yes ) > 0 ) {
@@ -218,7 +219,7 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.Controls.Add( button );
 
         button.Text = "&Yes";
-        button.Tag = DialogResult.Yes;
+        button.Tag = (int)DialogResult.Yes;
         _acceptButtonId = CommonButtons.Yes;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.No ) > 0 ) {
@@ -226,7 +227,7 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.Controls.Add( button );
 
         button.Text = "&No";
-        button.Tag = DialogResult.No;
+        button.Tag = (int)DialogResult.No;
         _cancelButtonId = CommonButtons.No;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Retry ) > 0 ) {
@@ -234,14 +235,14 @@ namespace TaskDialogNet.UserInterface {
         commonButtonPanel.Controls.Add( button );
 
         button.Text = "&Retry";
-        button.Tag = DialogResult.Retry;
+        button.Tag = (int)DialogResult.Retry;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Cancel ) > 0 ) {
         Button button = new Button();
         commonButtonPanel.Controls.Add( button );
 
         button.Text     = "&Cancel";
-        button.Tag      = DialogResult.Cancel;
+        button.Tag      = (int)DialogResult.Cancel;
         _cancelButtonId  = CommonButtons.Cancel;
       }
       if( ( TaskConfig.CommonButtons & CommonButtons.Close ) > 0 ) {
@@ -271,6 +272,9 @@ namespace TaskDialogNet.UserInterface {
         footerText.ReadOnly = true;
         footerText.BackColor = pnlFooter.BackColor;
       }
+
+      // Set title
+      Text = TaskConfig.WindowTitle;
 
       // Set up timer
       callbackTimer.Enabled = TaskConfig.Flags.CallbackTimer;
@@ -534,6 +538,12 @@ namespace TaskDialogNet.UserInterface {
     /// </summary>
     /// <param name="buttonId">Indicates the button ID to be clicked.</param>
     public void ClickButton( int buttonId ) {
+      ButtonClickedArgs buttonClickedArgs = new ButtonClickedArgs( buttonId );
+      if( InvokeButtonClicked( this, buttonClickedArgs ) ) return;
+      _commandButtonClicked = buttonId;
+      DialogResult = DialogResult.OK;
+      return;
+      /*
       IEnumerable<Button> commonButtons = commonButtonPanel.Controls.OfType<Button>();
       foreach( Button button in commonButtons.Where( button => (int)button.Tag == buttonId ) ) {
         InvokeButtonClicked( this, new ButtonClickedArgs( (int)button.Tag ) );
@@ -544,6 +554,7 @@ namespace TaskDialogNet.UserInterface {
         InvokeButtonClicked( this, new ButtonClickedArgs( (int)button.Tag ) );
         return;
       }
+      */
     }
 
     /// <summary>
